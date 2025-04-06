@@ -8,6 +8,7 @@ import com.milan.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -23,16 +24,38 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Boolean saveCategory(CategoryDto categoryDto) {
+        //convert dto to entity
         Category category = mapper.map(categoryDto, Category.class);
 
-        // Set isDeleted to false for a new category
-        category.setIsDeleted(false);
-        category.setCreatedBy(1);
-        category.setCreatedOn(new Date());
+        //if id is empty save category, otherwise update it
+        if(ObjectUtils.isEmpty(category.getId())){
+            // Set isDeleted to false for a new category
+            category.setIsDeleted(false);
+            category.setCreatedBy(1);
+            category.setCreatedOn(new Date());
+            categoryRepository.save(category);
+        }else {
+            updateCategory(category);
+        }
 
-        //if saved true, otherwise false
-        categoryRepository.save(category);
+        Category saveCategory = categoryRepository.save(category);
+        if (ObjectUtils.isEmpty(saveCategory)) {
+            return false;
+        }
         return true;
+    }
+
+    private void updateCategory(Category category) {
+        Optional<Category> findById = categoryRepository.findById(category.getId());
+        if (findById.isPresent()) {
+            Category existCategory = findById.get();
+            category.setCreatedBy(existCategory.getCreatedBy());
+            category.setCreatedOn(existCategory.getCreatedOn());
+            category.setIsDeleted(existCategory.getIsDeleted());
+
+            category.setUpdatedBy(1);
+            category.setUpdatedOn(new Date());
+        }
     }
 
     @Override
