@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +37,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public List<CategoryDto> getAllCategories() {
-        List<Category> allCategories = categoryRepository.findAll();
+        List<Category> allCategories = categoryRepository.findByIsDeletedFalse();
 
         //converting entity to dto list
         return allCategories.stream().map(cat -> mapper.map(cat, CategoryDto.class)).toList();
@@ -45,10 +46,37 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryResponse> getActiveCategories() {
 
-        List<Category> activeCategories = categoryRepository.findByIsActiveTrue();
+        List<Category> activeCategories = categoryRepository.findByIsActiveTrueAndIsDeletedFalse();
 
         //convert entity to response dto
         return activeCategories.stream().map(cat -> mapper.map(cat, CategoryResponse.class)).toList();
+    }
+
+    @Override
+    public CategoryDto getCategoryById(Integer id) {
+        Optional<Category> categoryById = categoryRepository.findByIdAndIsDeletedFalse(id);
+
+        if(categoryById.isPresent()) {
+            //get category if its present
+            Category category = categoryById.get();
+            //convert entity to dto
+           return mapper.map(category, CategoryDto.class);
+        }
+        return null;
+    }
+
+    @Override
+    public Boolean deleteCategoryById(Integer id) {
+        Optional<Category> categoryById = categoryRepository.findById(id);
+
+        if(categoryById.isPresent()) {
+            Category category = categoryById.get();
+            category.setIsDeleted(true);
+            category.setIsActive(false);
+            categoryRepository.save(category);
+            return true;
+        }
+        return false;
     }
 
 }

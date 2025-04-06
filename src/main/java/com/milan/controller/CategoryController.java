@@ -34,7 +34,7 @@ public class CategoryController {
         return new ResponseEntity<>("Category not saved", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @GetMapping("/category")
+    @GetMapping("/")
     public ResponseEntity<?> getAllCategoryWithDetails() {
 
         List<CategoryDto> allCategories = categoryService.getAllCategories();
@@ -45,7 +45,7 @@ public class CategoryController {
         return new ResponseEntity<>(allCategories, HttpStatus.OK);
     }
 
-    @GetMapping("/active-category")
+    @GetMapping("/active")
     public ResponseEntity<?> getActiveCategory() {
 
         List<CategoryResponse> activeCategories = categoryService.getActiveCategories();
@@ -56,4 +56,23 @@ public class CategoryController {
         return new ResponseEntity<>(activeCategories, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getCategoryDetailsById(@PathVariable("id") Integer id) {
+        CategoryDto categoryById = categoryService.getCategoryById(id);
+
+        if(categoryById != null) {
+            return new ResponseEntity<>(categoryById, HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Category not found of id: " + id, HttpStatus.NOT_FOUND);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCategoryDetailsById(@PathVariable("id") Integer id) {
+        Boolean isDeleted =  categoryService.deleteCategoryById(id);
+
+        if(isDeleted) {
+            return new ResponseEntity<>("Category deleted successfully", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Category not deleted", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
