@@ -6,6 +6,7 @@ import com.milan.exception.ResourceNotFoundException;
 import com.milan.model.Category;
 import com.milan.repository.CategoryRepository;
 import com.milan.service.CategoryService;
+import com.milan.util.CommonUtil;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,9 +34,11 @@ public class CategoryController {
 
         Boolean b = categoryService.saveCategory(categoryDto);
         if (b) {
-            return new ResponseEntity<>("Category Saved", HttpStatus.CREATED);
+           return CommonUtil.createBuildResponseMessage("Category saved", HttpStatus.CREATED);
+           // return new ResponseEntity<>("Category Saved", HttpStatus.CREATED);
         }
-        return new ResponseEntity<>("Category not saved", HttpStatus.INTERNAL_SERVER_ERROR);
+        return CommonUtil.createErrorResponseMessage("Category not saved", HttpStatus.INTERNAL_SERVER_ERROR);
+        //return new ResponseEntity<>("Category not saved", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @GetMapping("/")
@@ -46,7 +49,8 @@ public class CategoryController {
         if (CollectionUtils.isEmpty(allCategories)) {
             return ResponseEntity.noContent().build();
         }
-        return new ResponseEntity<>(allCategories, HttpStatus.OK);
+        return CommonUtil.createBuildResponse(allCategories,HttpStatus.OK);
+       // return new ResponseEntity<>(allCategories, HttpStatus.OK);
     }
 
     @GetMapping("/active")
@@ -57,32 +61,17 @@ public class CategoryController {
         if (CollectionUtils.isEmpty(activeCategories)) {
             return ResponseEntity.noContent().build();
         }
-        return new ResponseEntity<>(activeCategories, HttpStatus.OK);
+        return CommonUtil.createBuildResponse(activeCategories,HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getCategoryDetailsById(@PathVariable("id") Integer id) throws ResourceNotFoundException {
 
-        //handle with global exception handler
-//        try{
-//            CategoryDto categoryById = categoryService.getCategoryById(id);
-//            if(ObjectUtils.isEmpty(categoryById)) {
-//                return new ResponseEntity<>("Category not found of id: " + id, HttpStatus.NOT_FOUND);
-//            }
-//            return new ResponseEntity<>(categoryById, HttpStatus.OK);
-//        }catch(ResourceNotFoundException e) {
-//            log.error("In Category Controller:: getCategoryDetailsById :: ", e.getMessage());
-//            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-//        }
-//        catch (Exception e) {
-//           return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-
         CategoryDto categoryById = categoryService.getCategoryById(id);
         if(ObjectUtils.isEmpty(categoryById)) {
-            return new ResponseEntity<>("Please Try Again. Internal server error", HttpStatus.NOT_FOUND);
+            return CommonUtil.createErrorResponseMessage("Please Try Again. Internal server error", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(categoryById, HttpStatus.OK);
+        return CommonUtil.createBuildResponse(categoryById,HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
@@ -90,8 +79,8 @@ public class CategoryController {
         Boolean isDeleted =  categoryService.deleteCategoryById(id);
 
         if(isDeleted) {
-            return new ResponseEntity<>("Category deleted successfully", HttpStatus.OK);
+            return CommonUtil.createBuildResponseMessage("Category deleted successfully", HttpStatus.OK);
         }
-        return new ResponseEntity<>("Category not deleted", HttpStatus.INTERNAL_SERVER_ERROR);
+        return CommonUtil.createErrorResponseMessage("Category not deleted", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
