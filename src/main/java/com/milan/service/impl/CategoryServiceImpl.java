@@ -3,9 +3,11 @@ package com.milan.service.impl;
 import com.milan.dto.CategoryDto;
 import com.milan.dto.CategoryResponse;
 import com.milan.exception.ResourceNotFoundException;
+import com.milan.exception.ValidationException;
 import com.milan.model.Category;
 import com.milan.repository.CategoryRepository;
 import com.milan.service.CategoryService;
+import com.milan.util.Validation;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -25,8 +27,14 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final ModelMapper mapper;
 
+    private final Validation validation;
+
     @Override
     public Boolean saveCategory(CategoryDto categoryDto) {
+
+        //Validation check
+        validation.categoryValidation(categoryDto);
+
         //convert dto to entity
         Category category = mapper.map(categoryDto, Category.class);
         String newCategoryName = category.getName();
