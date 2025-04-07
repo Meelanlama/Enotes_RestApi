@@ -2,6 +2,7 @@ package com.milan.service.impl;
 
 import com.milan.dto.CategoryDto;
 import com.milan.dto.CategoryResponse;
+import com.milan.exception.ExistDataException;
 import com.milan.exception.ResourceNotFoundException;
 import com.milan.exception.ValidationException;
 import com.milan.model.Category;
@@ -35,22 +36,23 @@ public class CategoryServiceImpl implements CategoryService {
         //Validation check
         validation.categoryValidation(categoryDto);
 
+        //check category exists or not
+        Boolean exists = categoryRepository.existsCategoryByName(categoryDto.getName().trim());
+
+        if (exists) {
+            //throw error
+            throw new ExistDataException("Category already exists");
+        }
+
         //convert dto to entity
         Category category = mapper.map(categoryDto, Category.class);
-        String newCategoryName = category.getName();
 
             //if id is empty save category, otherwise update it
             if(ObjectUtils.isEmpty(category.getId())){
-
-                // New category creation check name if exists don't save
-                if (categoryRepository.existsCategoryByName(newCategoryName)) {
-                    return false;
-                }
-
                 // Set isDeleted to false for a new category
                 category.setIsDeleted(false);
-//                category.setCreatedBy(1);
-//                category.setCreatedOn(new Date());
+                //category.setCreatedBy(1);
+                //category.setCreatedOn(new Date());
                 categoryRepository.save(category);
             }else {
                 updateCategory(category);
