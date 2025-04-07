@@ -1,16 +1,15 @@
 package com.milan.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class Category extends BaseModel {
 
     @Id
@@ -20,4 +19,8 @@ public class Category extends BaseModel {
     private String name;
 
     private String description;
+
+    private Boolean isActive;
+
+    private Boolean isDeleted;
 }

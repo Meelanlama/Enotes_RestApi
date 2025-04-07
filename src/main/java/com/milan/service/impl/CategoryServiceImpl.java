@@ -49,8 +49,8 @@ public class CategoryServiceImpl implements CategoryService {
 
                 // Set isDeleted to false for a new category
                 category.setIsDeleted(false);
-                category.setCreatedBy(1);
-                category.setCreatedOn(new Date());
+//                category.setCreatedBy(1);
+//                category.setCreatedOn(new Date());
                 categoryRepository.save(category);
             }else {
                 updateCategory(category);
@@ -71,8 +71,8 @@ public class CategoryServiceImpl implements CategoryService {
             category.setCreatedOn(existCategory.getCreatedOn());
             category.setIsDeleted(existCategory.getIsDeleted());
 
-            category.setUpdatedBy(1);
-            category.setUpdatedOn(new Date());
+//            category.setUpdatedBy(1);
+//            category.setUpdatedOn(new Date());
         }
     }
 
