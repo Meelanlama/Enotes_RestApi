@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,9 +27,9 @@ public class NotesController {
     private final Validation validation;
 
     @PostMapping("/save-notes")
-    public ResponseEntity<?> saveNotes(@RequestBody NotesDto notesDto) throws Exception {
+    public ResponseEntity<?> saveNotes(@RequestParam String notes, @RequestParam(required = false) MultipartFile file) throws Exception {
 
-        Boolean b = noteService.saveNote(notesDto);
+        Boolean b = noteService.saveNote(notes,file);
 
         if(b) {
             return CommonUtil.createBuildResponseMessage("Notes saved.", HttpStatus.CREATED);

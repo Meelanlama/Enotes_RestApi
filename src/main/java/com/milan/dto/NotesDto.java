@@ -29,6 +29,8 @@ public class NotesDto {
 
     private Date updatedOn;
 
+    private FilesDto fileDetails;
+
     //inner class to only return category id and name only in notes instead of all details
     @Getter
     @Setter
@@ -41,4 +43,13 @@ public class NotesDto {
         private String name;
     }
 
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class FilesDto{
+        private String originalFileName;
+
+        private String displayFileName;
+    }
 }

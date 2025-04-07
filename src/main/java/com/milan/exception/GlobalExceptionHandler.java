@@ -19,14 +19,14 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NullPointerException.class)
-    public ResponseEntity<?> handleNullPointerException(Exception e) {
+    public ResponseEntity<?> handleNullPointerException(NullPointerException e) {
         log.error("In GlobalExceptionHandler :: handleNullPointerException ::", e.getMessage());
         //return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         return CommonUtil.createErrorResponseMessage(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<?> handleResourceNotFoundException(Exception e) {
+    public ResponseEntity<?> handleResourceNotFoundException(ResourceNotFoundException e) {
         log.error("In GlobalExceptionHandler :: handleResourceNotFoundException ::", e.getMessage());
        // return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         return CommonUtil.createErrorResponseMessage(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -45,6 +45,13 @@ public class GlobalExceptionHandler {
         log.error("In GlobalExceptionHandler :: handleExistDataException ::");
         //return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
         return CommonUtil.createErrorResponseMessage(e.getMessage(), HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<?> handleIllegalArgumentExceptionException(IllegalArgumentException e) {
+        log.error("In GlobalExceptionHandler :: handleIllegalArgumentExceptionException ::", e.getMessage());
+        //return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return CommonUtil.createErrorResponseMessage(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
     }
 
 }

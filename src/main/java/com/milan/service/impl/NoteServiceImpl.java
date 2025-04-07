@@ -1,19 +1,31 @@
 package com.milan.service.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.milan.dto.CategoryDto;
 import com.milan.dto.NotesDto;
 import com.milan.exception.ResourceNotFoundException;
+import com.milan.model.FileDetails;
 import com.milan.model.Notes;
 import com.milan.repository.CategoryRepository;
+import com.milan.repository.FileRepository;
 import com.milan.repository.NoteRepository;
 import com.milan.service.NoteService;
 import com.milan.util.Validation;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.FilenameUtils;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,8 +40,17 @@ public class NoteServiceImpl implements NoteService {
 
     private final Validation validation;
 
+    private final FileRepository fileRepository;
+
+    @Value("${file.upload.path}")
+    private String uploadPath;
+
     @Override
-    public Boolean saveNote(NotesDto notesDto) throws Exception {
+    public Boolean saveNote(String notes, MultipartFile file) throws Exception {
+
+        //convert string to dto using object mapper
+        ObjectMapper objMapper = new ObjectMapper();
+        NotesDto notesDto = objMapper.readValue(notes, NotesDto.class);
 
         validation.notesValidation(notesDto); // Throws ValidationException if invalid
 
@@ -37,12 +58,72 @@ public class NoteServiceImpl implements NoteService {
         checkCategoryExist(notesDto.getCategory());
 
         //convert dto to entity
-        Notes notes = mapper.map(notesDto, Notes.class);
+        Notes saveNote = mapper.map(notesDto, Notes.class);
 
-        Notes save = noteRepository.save(notes);
+        //Call methods to save
+        FileDetails fileDetails = saveFileDetails(file);
+
+        if(!ObjectUtils.isEmpty(fileDetails)) {
+            saveNote.setFileDetails(fileDetails);
+        }else {
+            saveNote.setFileDetails(null);
+        }
+
+        Notes save = noteRepository.save(saveNote);
 
         //returns true if it's not empty otherwise false
         return !ObjectUtils.isEmpty(save);
+    }
+
+    private FileDetails saveFileDetails(MultipartFile file) throws IOException {
+
+        if (!ObjectUtils.isEmpty(file) && !file.isEmpty()) {
+
+            String originalFilename = file.getOriginalFilename();
+            String extension = FilenameUtils.getExtension(originalFilename);
+
+            //Only allow these extensions
+            List<String> extensionAllow = Arrays.asList("pdf", "xlsx", "jpg", "png");
+            if (!extensionAllow.contains(extension)) {
+                throw new IllegalArgumentException("invalid file format ! Upload only .pdf , .xlsx,.jpg");
+            }
+
+            String rndString = UUID.randomUUID().toString();
+            String uploadfileName = rndString + "." + extension; // sdfsafbhkljsf.pdf
+
+            File saveFile = new File(uploadPath);
+            if (!saveFile.exists()) {
+                saveFile.mkdir();
+            }
+            // path : enotesapiservice/notes/java.pdf
+            String storePath = uploadPath.concat(uploadfileName);
+
+            // upload file
+            long upload = Files.copy(file.getInputStream(), Paths.get(storePath));
+            if (upload != 0) {
+                FileDetails fileDtls = new FileDetails();
+                fileDtls.setOriginalFileName(originalFilename);
+                fileDtls.setDisplayFileName(getDisplayName(originalFilename));
+                fileDtls.setUploadFileName(uploadfileName);
+                fileDtls.setFileSize(file.getSize());
+                fileDtls.setPath(storePath);
+                return fileRepository.save(fileDtls);
+            }
+        }
+        return null;
+    }
+
+    private String getDisplayName(String originalFilename) {
+        // java_programming_tutorials.pdf
+        // java_prog.pdf
+        String extension = FilenameUtils.getExtension(originalFilename);
+        String fileName = FilenameUtils.removeExtension(originalFilename);
+
+        if (fileName.length() > 8) {
+            fileName = fileName.substring(0, 7);
+        }
+        fileName = fileName + "." + extension;
+        return fileName;
     }
 
     private void checkCategoryExist(NotesDto.CategoryDto category) throws ResourceNotFoundException {
@@ -57,6 +138,5 @@ public class NoteServiceImpl implements NoteService {
       return  noteRepository.findAll().stream()
               .map(note -> mapper.map(note, NotesDto.class)).collect(Collectors.toList());
     }
-
 
 }

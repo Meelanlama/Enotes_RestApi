@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.io.File;
+
 @Entity
 @Getter
 @Setter
@@ -25,5 +27,8 @@ public class Notes extends BaseModel {
 
     @ManyToOne
     private Category category;
+
+    @ManyToOne
+    private FileDetails fileDetails;
 
 }
