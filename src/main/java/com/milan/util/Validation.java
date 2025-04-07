@@ -1,9 +1,11 @@
 package com.milan.util;
 
 import com.milan.dto.CategoryDto;
+import com.milan.dto.NotesDto;
 import com.milan.exception.ValidationException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -11,6 +13,7 @@ import java.util.Map;
 @Component
 public class Validation {
 
+    //Category Validation
     public void categoryValidation(CategoryDto categoryDto) {
 
         Map<String, Object> error = new LinkedHashMap<>();
@@ -20,7 +23,7 @@ public class Validation {
         } else {
 
             // validation name field
-            if (ObjectUtils.isEmpty(categoryDto.getName())) {
+            if (ObjectUtils.isEmpty(categoryDto.getName()) || !StringUtils.hasText(categoryDto.getName())) {
                 error.put("name", "name field is empty or null");
             } else {
                 if (categoryDto.getName().length() < 3) {
@@ -50,8 +53,50 @@ public class Validation {
         if (!error.isEmpty()) {
             throw new ValidationException(error);
         }
-
     }
 
+    //Notes Validation
+    public void notesValidation(NotesDto notesDto) {
+
+        Map<String, Object> error = new LinkedHashMap<>();
+
+        if (ObjectUtils.isEmpty(notesDto)) {
+            throw new IllegalArgumentException("NotesDto object must not be null");
+        } else {
+
+            // Validate title
+            if (ObjectUtils.isEmpty(notesDto.getTitle())) {
+                error.put("title", "Title must not be empty");
+            } else {
+                String title = notesDto.getTitle().trim(); // Trim whitespace
+                if (title.isEmpty()) {
+                    error.put("title", "Title must not be blank");
+                } else if (title.length() < 3) {
+                    error.put("title", "Title must be at least 3 characters");
+                } else if (title.length() > 100) {
+                    error.put("title", "Title must be at most 100 characters");
+                }
+            }
+
+            if (ObjectUtils.isEmpty(notesDto.getDescription())) {
+                error.put("description", "Description must not be empty");
+            } else {
+                String description = notesDto.getDescription().trim();
+                if (description.isEmpty()) {
+                    error.put("description", "Description must not be blank");
+                }
+            }
+
+            // Validate category (nested validation)
+            if (ObjectUtils.isEmpty(notesDto.getCategory())) {
+                error.put("category", "Category must not be null");
+            }
+
+            if (!error.isEmpty()) {
+                throw new ValidationException(error);
+            }
+
+        }
+    }
 }
 
