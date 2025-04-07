@@ -2,15 +2,18 @@ package com.milan.controller;
 
 import com.milan.dto.CategoryDto;
 import com.milan.dto.CategoryResponse;
+import com.milan.exception.ResourceNotFoundException;
 import com.milan.model.Category;
 import com.milan.repository.CategoryRepository;
 import com.milan.service.CategoryService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/api/v1/category")
 @RequiredArgsConstructor
+@Slf4j
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -57,13 +61,28 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCategoryDetailsById(@PathVariable("id") Integer id) {
-        CategoryDto categoryById = categoryService.getCategoryById(id);
+    public ResponseEntity<?> getCategoryDetailsById(@PathVariable("id") Integer id) throws ResourceNotFoundException {
 
-        if(categoryById != null) {
-            return new ResponseEntity<>(categoryById, HttpStatus.OK);
+        //handle with global exception handler
+//        try{
+//            CategoryDto categoryById = categoryService.getCategoryById(id);
+//            if(ObjectUtils.isEmpty(categoryById)) {
+//                return new ResponseEntity<>("Category not found of id: " + id, HttpStatus.NOT_FOUND);
+//            }
+//            return new ResponseEntity<>(categoryById, HttpStatus.OK);
+//        }catch(ResourceNotFoundException e) {
+//            log.error("In Category Controller:: getCategoryDetailsById :: ", e.getMessage());
+//            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+//        }
+//        catch (Exception e) {
+//           return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+
+        CategoryDto categoryById = categoryService.getCategoryById(id);
+        if(ObjectUtils.isEmpty(categoryById)) {
+            return new ResponseEntity<>("Please Try Again. Internal server error", HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>("Category not found of id: " + id, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(categoryById, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

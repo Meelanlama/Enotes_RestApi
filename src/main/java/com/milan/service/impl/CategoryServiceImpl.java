@@ -2,11 +2,14 @@ package com.milan.service.impl;
 
 import com.milan.dto.CategoryDto;
 import com.milan.dto.CategoryResponse;
+import com.milan.exception.ResourceNotFoundException;
 import com.milan.model.Category;
 import com.milan.repository.CategoryRepository;
 import com.milan.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -26,17 +29,24 @@ public class CategoryServiceImpl implements CategoryService {
     public Boolean saveCategory(CategoryDto categoryDto) {
         //convert dto to entity
         Category category = mapper.map(categoryDto, Category.class);
+        String newCategoryName = category.getName();
 
-        //if id is empty save category, otherwise update it
-        if(ObjectUtils.isEmpty(category.getId())){
-            // Set isDeleted to false for a new category
-            category.setIsDeleted(false);
-            category.setCreatedBy(1);
-            category.setCreatedOn(new Date());
-            categoryRepository.save(category);
-        }else {
-            updateCategory(category);
-        }
+            //if id is empty save category, otherwise update it
+            if(ObjectUtils.isEmpty(category.getId())){
+
+                // New category creation check name if exists don't save
+                if (categoryRepository.existsCategoryByName(newCategoryName)) {
+                    return false;
+                }
+
+                // Set isDeleted to false for a new category
+                category.setIsDeleted(false);
+                category.setCreatedBy(1);
+                category.setCreatedOn(new Date());
+                categoryRepository.save(category);
+            }else {
+                updateCategory(category);
+            }
 
         Category saveCategory = categoryRepository.save(category);
         if (ObjectUtils.isEmpty(saveCategory)) {
@@ -76,16 +86,13 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryDto getCategoryById(Integer id) {
-        Optional<Category> categoryById = categoryRepository.findByIdAndIsDeletedFalse(id);
+    public CategoryDto getCategoryById(Integer id) throws ResourceNotFoundException {
 
-        if(categoryById.isPresent()) {
-            //get category if its present
-            Category category = categoryById.get();
-            //convert entity to dto
-           return mapper.map(category, CategoryDto.class);
-        }
-        return null;
+        Category categoryById = categoryRepository.findByIdAndIsDeletedFalse(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Category not found with id = " + id));
+
+        // convert entity to dto
+        return mapper.map(categoryById, CategoryDto.class);
     }
 
     @Override
