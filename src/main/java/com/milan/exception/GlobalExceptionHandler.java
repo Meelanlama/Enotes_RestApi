@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.io.FileNotFoundException;
+
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
@@ -52,6 +54,13 @@ public class GlobalExceptionHandler {
         log.error("In GlobalExceptionHandler :: handleIllegalArgumentExceptionException ::", e.getMessage());
         //return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         return CommonUtil.createErrorResponseMessage(e.getMessage(), HttpStatus.NOT_ACCEPTABLE);
+    }
+
+    @ExceptionHandler(FileNotFoundException.class)
+    public ResponseEntity<?> handleFileNotFoundException(FileNotFoundException e) {
+        log.error("In GlobalExceptionHandler :: handleFileNotFoundException ::", e.getMessage());
+        //return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        return CommonUtil.createErrorResponseMessage(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
 }

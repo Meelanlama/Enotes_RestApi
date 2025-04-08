@@ -1,18 +1,21 @@
 package com.milan.controller;
 
 import com.milan.dto.NotesDto;
-import com.milan.repository.NoteRepository;
+import com.milan.model.FileDetails;
 import com.milan.service.NoteService;
 import com.milan.util.CommonUtil;
 import com.milan.util.Validation;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 @RestController
@@ -47,4 +50,27 @@ public class NotesController {
         return CommonUtil.createBuildResponse(notes,HttpStatus.OK);
     }
 
+    @GetMapping("/download-file/{fileId}")
+    public ResponseEntity<?> downloadFile(@PathVariable Integer fileId) throws Exception {
+
+            //get the file details first
+            FileDetails fileDetails = noteService.getFileDetails(fileId);
+
+            // Retrieve the file as a byte array from the service layer
+            byte[] downloadFile = noteService.downloadFile(fileDetails);
+
+             // Create HTTP headers for the response
+             HttpHeaders header = new HttpHeaders();
+
+            // Determine the file's content type with original name before download
+            String contentType = CommonUtil.getContentType(fileDetails.getOriginalFileName());
+
+            //Convert string type into media type
+            header.setContentType(MediaType.parseMediaType(contentType));
+            // header.setContentLength(file.length()); // Uncomment if needed
+            header.setContentDispositionFormData("Attachment", fileDetails.getOriginalFileName()); // Suggests file download
+
+            // Return the file with appropriate headers
+            return ResponseEntity.ok().headers(header).body(downloadFile);
+    }
 }

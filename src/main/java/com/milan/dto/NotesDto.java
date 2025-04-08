@@ -48,6 +48,8 @@ public class NotesDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class FilesDto{
+        private Integer id;
+
         private String originalFileName;
 
         private String displayFileName;

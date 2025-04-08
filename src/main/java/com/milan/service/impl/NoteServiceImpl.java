@@ -11,16 +11,17 @@ import com.milan.repository.FileRepository;
 import com.milan.repository.NoteRepository;
 import com.milan.service.NoteService;
 import com.milan.util.Validation;
+import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -83,7 +84,7 @@ public class NoteServiceImpl implements NoteService {
             String extension = FilenameUtils.getExtension(originalFilename);
 
             //Only allow these extensions
-            List<String> extensionAllow = Arrays.asList("pdf", "xlsx", "jpg", "png");
+            List<String> extensionAllow = Arrays.asList("pdf", "xlsx", "jpg", "png","docx");
             if (!extensionAllow.contains(extension)) {
                 throw new IllegalArgumentException("invalid file format ! Upload only .pdf , .xlsx,.jpg");
             }
@@ -137,6 +138,23 @@ public class NoteServiceImpl implements NoteService {
         //convert to dto
       return  noteRepository.findAll().stream()
               .map(note -> mapper.map(note, NotesDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public byte[] downloadFile(FileDetails fileDetails) throws ResourceNotFoundException, IOException {
+
+        //get the full file path and
+        // Create an input stream to read the file
+        InputStream file = new FileInputStream(fileDetails.getPath());
+
+        // Convert the input stream to a byte array and return it
+        return StreamUtils.copyToByteArray(file);
+    }
+
+    @Override
+    public FileDetails getFileDetails(Integer fileId) throws ResourceNotFoundException {
+        //find file from db
+        return fileRepository.findById(fileId).orElseThrow(() -> new ResourceNotFoundException("File not found"));
     }
 
 }
