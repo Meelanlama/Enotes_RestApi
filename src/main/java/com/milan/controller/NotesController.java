@@ -1,6 +1,7 @@
 package com.milan.controller;
 
 import com.milan.dto.NotesDto;
+import com.milan.dto.NotesResponse;
 import com.milan.model.FileDetails;
 import com.milan.service.NoteService;
 import com.milan.util.CommonUtil;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -40,6 +42,7 @@ public class NotesController {
         return CommonUtil.createErrorResponseMessage("Notes not saved.", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    //for admin-> all notes
     @GetMapping("/")
     public ResponseEntity<?> getAllNotes() {
         List<NotesDto> notes = noteService.getAllNotes();
@@ -47,6 +50,22 @@ public class NotesController {
         if(CollectionUtils.isEmpty(notes)) {
             return ResponseEntity.noContent().build();
         }
+        return CommonUtil.createBuildResponse(notes,HttpStatus.OK);
+    }
+
+    @GetMapping("/user-notes")
+    public ResponseEntity<?> getAllNotesByUser(
+            @RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
+            @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
+    ) {
+
+        Integer userId = 1;
+
+        NotesResponse notes = noteService.getAllNotesByUser(userId,pageNo,pageSize);
+
+//        if(ObjectUtils.isEmpty(notes)) {
+//            return ResponseEntity.noContent().build();
+//        }
         return CommonUtil.createBuildResponse(notes,HttpStatus.OK);
     }
 

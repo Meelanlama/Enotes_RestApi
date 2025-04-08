@@ -3,6 +3,7 @@ package com.milan.service.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.milan.dto.CategoryDto;
 import com.milan.dto.NotesDto;
+import com.milan.dto.NotesResponse;
 import com.milan.exception.ResourceNotFoundException;
 import com.milan.model.FileDetails;
 import com.milan.model.Notes;
@@ -16,6 +17,9 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.FilenameUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StreamUtils;
@@ -155,6 +159,27 @@ public class NoteServiceImpl implements NoteService {
     public FileDetails getFileDetails(Integer fileId) throws ResourceNotFoundException {
         //find file from db
         return fileRepository.findById(fileId).orElseThrow(() -> new ResourceNotFoundException("File not found"));
+    }
+
+    @Override
+    public NotesResponse getAllNotesByUser(Integer userId, Integer pageNo, Integer pageSize) {
+
+        Pageable pageable= PageRequest.of(pageNo,pageSize);
+        Page<Notes> pageNotes = noteRepository.findByCreatedBy(userId,pageable);
+
+        //convert note entity to dto
+        List<NotesDto> notesDto = pageNotes.get().map(n -> mapper.map(n, NotesDto.class)).toList();
+
+        //get all the data of notes
+        return NotesResponse.builder()
+                .notes(notesDto)
+                .pageNo(pageNotes.getNumber())
+                .pageSize(pageNotes.getSize())
+                .totalElements(pageNotes.getTotalElements())
+                .totalPages(pageNotes.getTotalPages())
+                .isFirst(pageNotes.isFirst())
+                .isLast(pageNotes.isLast())
+                .build();
     }
 
 }

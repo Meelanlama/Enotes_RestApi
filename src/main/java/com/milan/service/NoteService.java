@@ -1,8 +1,10 @@
 package com.milan.service;
 
 import com.milan.dto.NotesDto;
+import com.milan.dto.NotesResponse;
 import com.milan.exception.ResourceNotFoundException;
 import com.milan.model.FileDetails;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
@@ -18,4 +20,6 @@ public interface NoteService {
     byte[] downloadFile(FileDetails fileDetails) throws ResourceNotFoundException, IOException;
 
     FileDetails getFileDetails(Integer fileId) throws ResourceNotFoundException;
+
+    NotesResponse getAllNotesByUser(Integer userId, Integer pageNo, Integer pageSize);
 }
