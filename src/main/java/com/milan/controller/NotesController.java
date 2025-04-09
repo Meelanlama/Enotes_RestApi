@@ -1,5 +1,6 @@
 package com.milan.controller;
 
+import com.milan.dto.FavouriteNoteDto;
 import com.milan.dto.NotesDto;
 import com.milan.dto.NotesResponse;
 import com.milan.model.FileDetails;
@@ -128,6 +129,28 @@ public class NotesController {
         int userId=1;
         noteService.emptyRecycleBin(userId);
         return CommonUtil.createBuildResponseMessage("All notes deleted permanently", HttpStatus.OK);
+    }
+
+    @GetMapping("/fav/{noteId}")
+    public ResponseEntity<?> favoriteNote(@PathVariable Integer noteId) throws Exception {
+        noteService.favoriteNotes(noteId);
+        return CommonUtil.createBuildResponseMessage("Note added Favorite", HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/un-fav/{favNoteId}")
+    public ResponseEntity<?> unFavoriteNote(@PathVariable Integer favNoteId) throws Exception {
+        noteService.unFavoriteNotes(favNoteId);
+        return CommonUtil.createBuildResponseMessage("Note Removed From Favorite", HttpStatus.OK);
+    }
+
+    @GetMapping("/fav-note")
+    public ResponseEntity<?> getUserfavoriteNote() throws Exception {
+
+        List<FavouriteNoteDto> userFavoriteNotes = noteService.getUserFavoriteNotes();
+        if (CollectionUtils.isEmpty(userFavoriteNotes)) {
+            return ResponseEntity.noContent().build();
+        }
+        return CommonUtil.createBuildResponse(userFavoriteNotes, HttpStatus.OK);
     }
 
 }

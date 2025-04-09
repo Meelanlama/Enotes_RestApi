@@ -1,5 +1,6 @@
 package com.milan.service;
 
+import com.milan.dto.FavouriteNoteDto;
 import com.milan.dto.NotesDto;
 import com.milan.dto.NotesResponse;
 import com.milan.exception.ResourceNotFoundException;
@@ -32,4 +33,11 @@ public interface NoteService {
     void hardDeleteNotes(Integer id) throws ResourceNotFoundException;
 
     void emptyRecycleBin(int userId);
+
+    void favoriteNotes(Integer noteId) throws Exception;
+
+    void unFavoriteNotes(Integer favNoteId) throws Exception;
+
+    List<FavouriteNoteDto> getUserFavoriteNotes() throws Exception;
+
 }
