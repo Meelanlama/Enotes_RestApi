@@ -302,4 +302,30 @@ public class NoteServiceImpl implements NoteService {
         return favouriteNotes.stream().map(fn -> mapper.map(fn, FavouriteNoteDto.class)).toList();
     }
 
+    @Override
+    public Boolean copyNotes(Integer noteId) throws ResourceNotFoundException {
+        Notes notes = noteRepository.findById(noteId)
+                .orElseThrow(() -> new ResourceNotFoundException("Notes id invalid ! Not Found"));
+
+//        Notes copyNotes = new Notes();
+//        copyNotes.setTitle(notes.getTitle());
+
+        //Need to check user validation before copying,
+        //they can only copy their own notes
+        
+         Notes copyNotes = Notes.builder()
+                 .title(notes.getTitle())
+                 .description(notes.getDescription())
+                 .category(notes.getCategory())
+                 .isDeleted(false)
+                 .build();
+
+        Notes save = noteRepository.save(copyNotes);
+
+        if(ObjectUtils.isEmpty(save)){
+            return false;
+        }
+        return true;
+    }
+
 }

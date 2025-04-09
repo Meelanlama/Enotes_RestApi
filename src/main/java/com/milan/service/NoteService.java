@@ -40,4 +40,5 @@ public interface NoteService {
 
     List<FavouriteNoteDto> getUserFavoriteNotes() throws Exception;
 
+    Boolean copyNotes(Integer noteId) throws ResourceNotFoundException;
 }
