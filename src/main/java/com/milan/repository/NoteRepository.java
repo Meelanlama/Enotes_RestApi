@@ -6,10 +6,19 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
 public interface NoteRepository extends JpaRepository<Notes, Integer> {
 
     Page<Notes> findByCreatedBy(Integer createdBy, Pageable pageable);
+
+    List<Notes> findByCreatedByAndIsDeletedTrue(Integer userId);
+
+    Page<Notes> findByCreatedByAndIsDeletedFalse(Integer userId, Pageable pageable);
+
+    List<Notes> findByIsDeletedFalse();
+
+    List<Notes> findAllByIsDeletedAndDeletedOnBefore(boolean b, LocalDateTime deleteNoteDay);
 }

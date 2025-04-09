@@ -21,6 +21,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +29,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -57,6 +61,16 @@ public class NoteServiceImpl implements NoteService {
         ObjectMapper objMapper = new ObjectMapper();
         NotesDto notesDto = objMapper.readValue(notes, NotesDto.class);
 
+        // For new notes, explicitly set deletion flag
+        notesDto.setIsDeleted(false);
+        notesDto.setDeletedOn(null);
+
+        // If ID is provided, validate the note is NOT deleted
+        if(!ObjectUtils.isEmpty(notesDto.getId())){
+            updateNotes(notesDto,file);
+        }
+
+        //check category exists or not
         validation.notesValidation(notesDto); // Throws ValidationException if invalid
 
         //category validation check if category exists or not before saving
@@ -65,19 +79,41 @@ public class NoteServiceImpl implements NoteService {
         //convert dto to entity
         Notes saveNote = mapper.map(notesDto, Notes.class);
 
-        //Call methods to save
+        //Call method to save file details
         FileDetails fileDetails = saveFileDetails(file);
 
         if(!ObjectUtils.isEmpty(fileDetails)) {
             saveNote.setFileDetails(fileDetails);
         }else {
-            saveNote.setFileDetails(null);
+            //set file to null only if id is null. for new notes
+            if(ObjectUtils.isEmpty(notesDto.getId())){
+                saveNote.setFileDetails(null);
+            }
         }
 
         Notes save = noteRepository.save(saveNote);
 
         //returns true if it's not empty otherwise false
         return !ObjectUtils.isEmpty(save);
+    }
+
+    //for updating notes
+    private void updateNotes(NotesDto notesDto, MultipartFile file) throws ResourceNotFoundException {
+
+        // Fetch existing note and check deletion status
+        Notes existsNotes = noteRepository.findById(notesDto.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Invalid note id"));
+
+        // Check: Block updates to deleted notes
+        if (existsNotes.getIsDeleted()) { // Ensure `isDeleted` is a field in the Notes entity
+            throw new IllegalStateException("Cannot update note because it's in recycle bin");
+        }
+
+        // Handle file updates only if the note is active
+        if (!ObjectUtils.isEmpty(file) && !file.isEmpty()) {
+            //convert to dto
+            notesDto.setFileDetails(mapper.map(existsNotes.getFileDetails(), NotesDto.FilesDto.class));
+        }
     }
 
     private FileDetails saveFileDetails(MultipartFile file) throws IOException {
@@ -140,8 +176,9 @@ public class NoteServiceImpl implements NoteService {
     @Override
     public List<NotesDto> getAllNotes() {
         //convert to dto
-      return  noteRepository.findAll().stream()
-              .map(note -> mapper.map(note, NotesDto.class)).collect(Collectors.toList());
+        return noteRepository.findByIsDeletedFalse().stream()
+                .map(note -> mapper.map(note, NotesDto.class))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -165,7 +202,8 @@ public class NoteServiceImpl implements NoteService {
     public NotesResponse getAllNotesByUser(Integer userId, Integer pageNo, Integer pageSize) {
 
         Pageable pageable= PageRequest.of(pageNo,pageSize);
-        Page<Notes> pageNotes = noteRepository.findByCreatedBy(userId,pageable);
+        //GET ONLY ACTIVE NOTES
+        Page<Notes> pageNotes = noteRepository.findByCreatedByAndIsDeletedFalse(userId,pageable);
 
         //convert note entity to dto
         List<NotesDto> notesDto = pageNotes.get().map(n -> mapper.map(n, NotesDto.class)).toList();
@@ -180,6 +218,58 @@ public class NoteServiceImpl implements NoteService {
                 .isFirst(pageNotes.isFirst())
                 .isLast(pageNotes.isLast())
                 .build();
+    }
+
+    @Override
+    public void softDeleteNotes(Integer id) throws ResourceNotFoundException {
+        Notes notes = noteRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Notes id invalid ! Not Found"));
+
+        //set soft delete to true
+        notes.setIsDeleted(true);
+        notes.setDeletedOn(LocalDateTime.now());
+        noteRepository.save(notes);
+    }
+
+    @Override
+    public void restoreNotes(Integer id) throws ResourceNotFoundException {
+        Notes notes = noteRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Notes id invalid ! Not Found"));
+
+        //set soft delete to true
+        notes.setIsDeleted(false);
+        notes.setDeletedOn(null);
+        noteRepository.save(notes);
+    }
+
+    @Override
+    public List<NotesDto> getUserRecycleBinNotes(Integer userId) {
+        List<Notes> recycleNotes = noteRepository.findByCreatedByAndIsDeletedTrue(userId);
+
+        //convert list entity to dto entity
+        return recycleNotes.stream().map(note -> mapper.map(note, NotesDto.class)).toList();
+    }
+
+    @Override
+    public void hardDeleteNotes(Integer id) throws ResourceNotFoundException {
+        Notes notes = noteRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Note not found"));
+
+        //delete only notes if is deleted is true(already in recycle bin)
+        if (notes.getIsDeleted()) {
+            noteRepository.delete(notes);
+        } else {
+            throw new IllegalArgumentException("Sorry! You cant delete Directly. It should be in Recycle bin");
+        }
+    }
+
+    @Override
+    public void emptyRecycleBin(int userId) {
+        List<Notes> recycleNotes = noteRepository.findByCreatedByAndIsDeletedTrue(userId);
+        if (!CollectionUtils.isEmpty(recycleNotes)) {
+            noteRepository.deleteAll(recycleNotes);
+        }else {
+            throw new IllegalArgumentException("Recycle bin is empty");
+        }
     }
 
 }

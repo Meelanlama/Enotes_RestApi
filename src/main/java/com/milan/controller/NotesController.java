@@ -34,9 +34,9 @@ public class NotesController {
     @PostMapping("/save-notes")
     public ResponseEntity<?> saveNotes(@RequestParam String notes, @RequestParam(required = false) MultipartFile file) throws Exception {
 
-        Boolean b = noteService.saveNote(notes,file);
+        Boolean saveNote = noteService.saveNote(notes,file);
 
-        if(b) {
+        if(saveNote) {
             return CommonUtil.createBuildResponseMessage("Notes saved.", HttpStatus.CREATED);
         }
         return CommonUtil.createErrorResponseMessage("Notes not saved.", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -92,4 +92,42 @@ public class NotesController {
             // Return the file with appropriate headers
             return ResponseEntity.ok().headers(header).body(downloadFile);
     }
+
+    //soft delete
+    @GetMapping("/delete/{id}")
+    public ResponseEntity<?> deleteNotes(@PathVariable Integer id) throws Exception {
+        noteService.softDeleteNotes(id);
+        return CommonUtil.createBuildResponseMessage("Notes Deleted. Check in recycle bin", HttpStatus.OK);
+    }
+
+    @GetMapping("/restore/{id}")
+    public ResponseEntity<?> restoreNotes(@PathVariable Integer id) throws Exception {
+        noteService.restoreNotes(id);
+        return CommonUtil.createBuildResponseMessage("Notes Restored", HttpStatus.OK);
+    }
+
+    @GetMapping("/recycle-bin")
+    public ResponseEntity<?> getUserRecycleBinNotes() throws Exception {
+        //get user logged in id
+        Integer userId = 1;
+        List<NotesDto> notes = noteService.getUserRecycleBinNotes(userId);
+        if (CollectionUtils.isEmpty(notes)) {
+            return CommonUtil.createBuildResponseMessage("Recycle Bin is Empty.", HttpStatus.OK);
+        }
+        return CommonUtil.createBuildResponse(notes, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> hardDeleteNotes(@PathVariable Integer id) throws Exception {
+        noteService.hardDeleteNotes(id);
+        return CommonUtil.createBuildResponseMessage("Notes Deleted Permanently", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete-recyleBin")
+    public ResponseEntity<?> emptyRecyleBin() throws Exception {
+        int userId=1;
+        noteService.emptyRecycleBin(userId);
+        return CommonUtil.createBuildResponseMessage("All notes deleted permanently", HttpStatus.OK);
+    }
+
 }
