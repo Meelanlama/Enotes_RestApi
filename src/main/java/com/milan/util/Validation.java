@@ -2,6 +2,9 @@ package com.milan.util;
 
 import com.milan.dto.CategoryDto;
 import com.milan.dto.NotesDto;
+import com.milan.dto.TodoDto;
+import com.milan.enums.TodoStatus;
+import com.milan.exception.ResourceNotFoundException;
 import com.milan.exception.ValidationException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
@@ -95,8 +98,24 @@ public class Validation {
             if (!error.isEmpty()) {
                 throw new ValidationException(error);
             }
-
         }
     }
+
+    //To do validation
+    public void todoValidation(TodoDto todo) throws Exception {
+        TodoDto.StatusDto reqStatus = todo.getStatus();
+        Boolean statusFound = false;
+
+        //if only the id is correct, then make it true
+        for (TodoStatus st : TodoStatus.values()) {
+            if (st.getId().equals(reqStatus.getId())) {
+                statusFound = true;
+            }
+        }
+        if (!statusFound) {
+            throw new ResourceNotFoundException("Invalid status");
+        }
+    }
+
 }
 
