@@ -63,4 +63,10 @@ public class GlobalExceptionHandler {
         return CommonUtil.createErrorResponseMessage(e.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(SuccessException.class)
+    public ResponseEntity<?> handleSuccessException(SuccessException e) {
+        log.error("In GlobalExceptionHandler :: SuccessException ::", e.getMessage());
+        return CommonUtil.createBuildResponse(e.getMessage(), HttpStatus.OK);
+    }
+
 }

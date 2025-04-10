@@ -1,6 +1,7 @@
 package com.milan.util;
 
 import com.milan.handler.GenericResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -74,5 +75,13 @@ public class CommonUtil {
                     return "application/octet-stream"; // Default MIME type for unknown files
             }
         }
+
+    //for generating dynamic url
+    public static String getUrl(HttpServletRequest request) {
+        String apiUrl = request.getRequestURL().toString(); // http:localhost:8080/api/v1/home
+        apiUrl = apiUrl.replace(request.getServletPath(),""); // http:localhost:8080
+        return apiUrl;
     }
+
+}
 
