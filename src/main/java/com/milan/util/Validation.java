@@ -3,18 +3,32 @@ package com.milan.util;
 import com.milan.dto.CategoryDto;
 import com.milan.dto.NotesDto;
 import com.milan.dto.TodoDto;
+import com.milan.dto.UserDto;
 import com.milan.enums.TodoStatus;
+import com.milan.exception.ExistDataException;
 import com.milan.exception.ResourceNotFoundException;
 import com.milan.exception.ValidationException;
+import com.milan.model.Role;
+import com.milan.repository.RoleRepository;
+import com.milan.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class Validation {
+
+    private final RoleRepository roleRepo;
+
+    private final UserRepository userRepo;
 
     //Category Validation
     public void categoryValidation(CategoryDto categoryDto) {
@@ -115,6 +129,43 @@ public class Validation {
         if (!statusFound) {
             throw new ResourceNotFoundException("Invalid status");
         }
+    }
+
+    //Role validation for user
+    public void userValidation(UserDto userDto) {
+
+        if(!StringUtils.hasText(userDto.getFirstName()) || !StringUtils.hasText(userDto.getLastName())) {
+            throw new IllegalArgumentException("Please enter valid details");
+        }
+
+        if(!StringUtils.hasText(userDto.getEmail()) || !userDto.getEmail().matches(Constants.EMAIL_REGEX)) {
+            throw new IllegalArgumentException("Please enter valid email");
+        }else {
+            //validate duplicate email
+            boolean exist = userRepo.existsByEmail(userDto.getEmail());
+            if(exist) {
+                throw new ExistDataException("Email already exists");
+            }
+        }
+
+        if(!StringUtils.hasText(userDto.getMobileNumber()) || !userDto.getMobileNumber().matches(Constants.MOBILE_REGEX)) {
+            throw new IllegalArgumentException("Please enter valid mobile number");
+        }
+
+        if(CollectionUtils.isEmpty(userDto.getRoles())) {
+            throw new IllegalArgumentException("Please enter valid role. Empty");
+        }else {
+            List<Integer> allRoleIds = roleRepo.findAll().stream().map(r -> r.getId()).collect(Collectors.toList());
+
+            List<Integer> roleRequestId = userDto.getRoles().stream()
+                    .map(r -> r.getId())
+                    .filter(roleId -> allRoleIds.contains(roleId)).toList();
+
+            if(CollectionUtils.isEmpty(roleRequestId)) {
+                throw new IllegalArgumentException("Please enter valid role:" + roleRequestId);
+            }
+        }
+
     }
 
 }
