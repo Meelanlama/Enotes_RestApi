@@ -1,10 +1,15 @@
 package com.milan.util;
 
+import com.milan.config.security.CustomUserDetails;
+import com.milan.dto.UserResponse;
 import com.milan.handler.GenericResponse;
+import com.milan.model.User;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 public class CommonUtil {
@@ -81,6 +86,15 @@ public class CommonUtil {
         String apiUrl = request.getRequestURL().toString(); // http:localhost:8080/api/v1/home
         apiUrl = apiUrl.replace(request.getServletPath(),""); // http:localhost:8080
         return apiUrl;
+    }
+
+    public static User getLoggedInUser() {
+        try{
+            CustomUserDetails logInUser = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            return logInUser.getUser();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

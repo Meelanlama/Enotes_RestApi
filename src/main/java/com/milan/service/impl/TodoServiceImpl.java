@@ -6,6 +6,7 @@ import com.milan.exception.ResourceNotFoundException;
 import com.milan.model.Todo;
 import com.milan.repository.TodoRepository;
 import com.milan.service.TodoService;
+import com.milan.util.CommonUtil;
 import com.milan.util.Validation;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -79,7 +80,7 @@ public class TodoServiceImpl implements TodoService {
 
     @Override
     public List<TodoDto> getTodoByUser() {
-        Integer userId = 1;
+        Integer userId = CommonUtil.getLoggedInUser().getId();
         List<Todo> todos = todoRepo.findByCreatedBy(userId);
         return todos.stream().map(td -> mapper.map(td, TodoDto.class)).toList();
     }
