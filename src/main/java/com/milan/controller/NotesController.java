@@ -13,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +34,7 @@ public class NotesController {
     private final Validation validation;
 
     @PostMapping("/save-notes")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> saveNotes(@RequestParam String notes, @RequestParam(required = false) MultipartFile file) throws Exception {
 
         Boolean saveNote = noteService.saveNote(notes,file);
@@ -45,6 +47,7 @@ public class NotesController {
 
     //for admin-> all notes
     @GetMapping("/")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> getAllNotes() {
         List<NotesDto> notes = noteService.getAllNotes();
 
@@ -55,6 +58,7 @@ public class NotesController {
     }
 
     @GetMapping("/user-notes")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> getAllNotesByUser(
             @RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
             @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize
@@ -71,6 +75,7 @@ public class NotesController {
     }
 
     @GetMapping("/download-file/{fileId}")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<?> downloadFile(@PathVariable Integer fileId) throws Exception {
 
             //get the file details first
@@ -96,18 +101,21 @@ public class NotesController {
 
     //soft delete
     @GetMapping("/delete/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> deleteNotes(@PathVariable Integer id) throws Exception {
         noteService.softDeleteNotes(id);
         return CommonUtil.createBuildResponseMessage("Notes Deleted. Check in recycle bin", HttpStatus.OK);
     }
 
     @GetMapping("/restore/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> restoreNotes(@PathVariable Integer id) throws Exception {
         noteService.restoreNotes(id);
         return CommonUtil.createBuildResponseMessage("Notes Restored", HttpStatus.OK);
     }
 
     @GetMapping("/recycle-bin")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> getUserRecycleBinNotes() throws Exception {
         //get user logged in id
         Integer userId = 1;
@@ -119,12 +127,14 @@ public class NotesController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> hardDeleteNotes(@PathVariable Integer id) throws Exception {
         noteService.hardDeleteNotes(id);
         return CommonUtil.createBuildResponseMessage("Notes Deleted Permanently", HttpStatus.OK);
     }
 
     @DeleteMapping("/delete-recyleBin")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> emptyRecyleBin() throws Exception {
         int userId=1;
         noteService.emptyRecycleBin(userId);
@@ -132,18 +142,21 @@ public class NotesController {
     }
 
     @GetMapping("/fav/{noteId}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> favoriteNote(@PathVariable Integer noteId) throws Exception {
         noteService.favoriteNotes(noteId);
         return CommonUtil.createBuildResponseMessage("Note added Favorite", HttpStatus.CREATED);
     }
 
     @DeleteMapping("/un-fav/{favNoteId}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> unFavoriteNote(@PathVariable Integer favNoteId) throws Exception {
         noteService.unFavoriteNotes(favNoteId);
         return CommonUtil.createBuildResponseMessage("Note Removed From Favorite", HttpStatus.OK);
     }
 
     @GetMapping("/fav-note")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<?> getUserfavoriteNote() throws Exception {
 
         List<FavouriteNoteDto> userFavoriteNotes = noteService.getUserFavoriteNotes();

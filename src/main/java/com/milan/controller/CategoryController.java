@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,7 @@ public class CategoryController {
     private final ModelMapper mapper;
 
     @PostMapping("/save-category")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> saveCategory(@RequestBody CategoryDto categoryDto) {
 
         Boolean b = categoryService.saveCategory(categoryDto);
@@ -42,6 +44,7 @@ public class CategoryController {
     }
 
     @GetMapping("/")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllCategoryWithDetails() {
 
         List<CategoryDto> allCategories = categoryService.getAllCategories();
@@ -54,6 +57,7 @@ public class CategoryController {
     }
 
     @GetMapping("/active")
+    @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<?> getActiveCategory() {
 
         List<CategoryResponse> activeCategories = categoryService.getActiveCategories();
@@ -65,6 +69,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getCategoryDetailsById(@PathVariable("id") Integer id) throws ResourceNotFoundException {
 
         CategoryDto categoryById = categoryService.getCategoryById(id);
@@ -75,6 +80,7 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteCategoryDetailsById(@PathVariable("id") Integer id) {
         Boolean isDeleted =  categoryService.deleteCategoryById(id);
 

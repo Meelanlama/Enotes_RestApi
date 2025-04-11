@@ -1,7 +1,10 @@
 package com.milan.service.impl;
 
+import com.milan.exception.JwtTokenExpiredException;
 import com.milan.model.User;
 import com.milan.service.JwtService;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
@@ -73,12 +76,18 @@ public class JwtServiceImpl implements JwtService {
     }
 
     private Claims extractAllClaims(String token) {
-        Claims claims = Jwts.parser()
-                .verifyWith(decryptKey(secretKey))
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
-        return claims;
+        try {
+            return Jwts.parser()
+                    .verifyWith(decryptKey(secretKey))
+                    .build().parseSignedClaims(token).getPayload();
+        }
+        catch (ExpiredJwtException e) {
+            throw new JwtTokenExpiredException("Token is Expired");
+        }catch (JwtException e) {
+            throw new JwtTokenExpiredException("Invalid Jwt token");
+        }catch (Exception e) {
+            throw e;
+        }
     }
 
     private SecretKey decryptKey(String secretKey) {
