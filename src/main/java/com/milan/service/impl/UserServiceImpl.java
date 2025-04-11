@@ -1,16 +1,24 @@
 package com.milan.service.impl;
 
+import com.milan.config.security.CustomUserDetails;
 import com.milan.dto.EmailRequest;
+import com.milan.dto.LoginRequest;
+import com.milan.dto.LoginResponse;
 import com.milan.dto.UserDto;
 import com.milan.model.AccountStatus;
 import com.milan.model.Role;
 import com.milan.model.User;
 import com.milan.repository.RoleRepository;
 import com.milan.repository.UserRepository;
+import com.milan.service.JwtService;
 import com.milan.service.UserService;
 import com.milan.util.Validation;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -31,6 +39,12 @@ public class UserServiceImpl implements UserService {
 
     private final EmailService emailService;
 
+    private final PasswordEncoder passwordEncoder;
+
+    private final AuthenticationManager authenticationManager;
+
+    private final JwtService jwtService;
+
     @Override
     public Boolean registerUser(UserDto userDto,String url) throws Exception {
 
@@ -46,6 +60,7 @@ public class UserServiceImpl implements UserService {
                 .build();
 
         saveUser.setStatus(status);
+        saveUser.setPassword(passwordEncoder.encode(saveUser.getPassword()));
 
         User savedUser = userRepo.save(saveUser);
         if(savedUser != null) {
@@ -83,6 +98,26 @@ public class UserServiceImpl implements UserService {
         List<Integer> roleId = userDto.getRoles().stream().map(r -> r.getId()).toList();
         List<Role> roles = roleRepo.findAllById(roleId);
         saveUser.setRoles(roles);
+    }
+
+    @Override
+    public LoginResponse login(LoginRequest loginRequest) {
+        Authentication authenticate = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+
+        if(authenticate.isAuthenticated())
+        {
+            CustomUserDetails customUserDetails= (CustomUserDetails)authenticate.getPrincipal();
+
+            String token=jwtService.generateToken(customUserDetails.getUser());
+
+            LoginResponse loginResponse=LoginResponse.builder()
+                    .user(mapper.map(customUserDetails.getUser(), UserDto.class))
+                    .token(token)
+                    .build();
+            return loginResponse;
+        }
+        return null;
     }
 
 }

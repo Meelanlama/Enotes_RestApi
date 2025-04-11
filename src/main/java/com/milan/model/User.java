@@ -32,7 +32,7 @@ public class User {
 
     private String mobileNumber;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role", // <-- match your actual table name
             joinColumns = @JoinColumn(name = "user_id"),
