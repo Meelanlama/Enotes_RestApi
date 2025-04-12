@@ -12,6 +12,8 @@ import com.milan.service.AuthService;
 import com.milan.util.Validation;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -41,8 +43,12 @@ public class AuthServiceImpl implements AuthService {
 
     private final JwtService jwtService;
 
+    private static final Logger logger = LoggerFactory.getLogger(AuthServiceImpl.class);
+
     @Override
     public Boolean registerUser(UserDto userDto,String url) throws Exception {
+
+        logger.info("Starting registration process for email={}", userDto.getEmail());
 
         //validate role before register
         validation.userValidation(userDto);
@@ -58,36 +64,45 @@ public class AuthServiceImpl implements AuthService {
         saveUser.setStatus(status);
         saveUser.setPassword(passwordEncoder.encode(saveUser.getPassword()));
 
+        logger.debug("User object prepared for saving: {}", saveUser);
+
         User savedUser = userRepo.save(saveUser);
         if(savedUser != null) {
             //send email
+            logger.info("User registration successful for email={}", savedUser.getEmail());
             emailSend(savedUser,url);
             return true;
+        } else {
+            logger.error("User registration failed for email={}", userDto.getEmail());
         }
         return false;
     }
 
-    private void emailSend(User savedUser,String url) throws Exception {
+    private void emailSend(User savedUser, String url) throws Exception {
+        try {
+            String emailMessage = "Hi,<b>[[username]]</b> "
+                    + "<br> Your account has been registered successfully.<br>"
+                    + "<br> Click the below link verify & Activate your account <br>"
+                    + "<a href ='[[url]]'>Click Here</a> <br><br>"
+                    + "Thanks,<br>Enotes.com";
 
-        String emailMessage="Hi,<b>[[username]]</b> "
-                + "<br> Your account has been registered successfully.<br>"
-                +"<br> Click the below link verify & Active your account <br>"
-                +"<a href ='[[url]]'>Click Here</a> <br><br>"
-                +"Thanks,<br>Enotes.com"
-                ;
+            emailMessage = emailMessage.replace("[[username]]", savedUser.getFirstName());
+            emailMessage = emailMessage.replace("[[url]]",
+                    url + "/api/v1/home/verify?userId=" + savedUser.getId() + "&&verificationCode=" + savedUser.getStatus().getVerificationCode());
 
-        emailMessage = emailMessage.replace("[[username]]",savedUser.getFirstName());
-        emailMessage = emailMessage.replace("[[url]]",
-                url+"/api/v1/home/verify?userId="+savedUser.getId()+"&&verificationCode="+savedUser.getStatus().getVerificationCode());
+            EmailRequest emailRequest = EmailRequest.builder()
+                    .to(savedUser.getEmail())
+                    .title("Confirm Your Registration")
+                    .subject("Account Register Successful")
+                    .message(emailMessage)
+                    .build();
 
-        EmailRequest emailRequest = EmailRequest.builder()
-                .to(savedUser.getEmail())
-                .title("Confirm Your Registration")
-                .subject("Account Register Successful")
-                .message(emailMessage)
-                .build();
+            logger.info("Sending email to: {}", savedUser.getEmail());
+            emailService.sendEmail(emailRequest);
 
-        emailService.sendEmail(emailRequest);
+        } catch (Exception e) {
+            logger.error("Failed to send email for user {}: {}", savedUser.getEmail(), e.getMessage(), e);
+        }
     }
 
     private void setRole(UserDto userDto,User saveUser) {
@@ -98,22 +113,34 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public LoginResponse login(LoginRequest loginRequest) {
-        Authentication authenticate = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
 
-        if(authenticate.isAuthenticated())
-        {
-            CustomUserDetails customUserDetails= (CustomUserDetails)authenticate.getPrincipal();
+        logger.info("Login attempt for email={}", loginRequest.getEmail());
 
-            String token=jwtService.generateToken(customUserDetails.getUser());
+        try {
+            Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken
+                    (loginRequest.getEmail(), loginRequest.getPassword()));
 
-            LoginResponse loginResponse=LoginResponse.builder()
-                    .user(mapper.map(customUserDetails.getUser(), UserResponse.class))
-                    .token(token)
-                    .build();
-            return loginResponse;
+            if (authenticate.isAuthenticated()) {
+                CustomUserDetails customUserDetails = (CustomUserDetails) authenticate.getPrincipal();
+
+                String token = jwtService.generateToken(customUserDetails.getUser());
+
+                LoginResponse loginResponse = LoginResponse.builder()
+                        .user(mapper.map(customUserDetails.getUser(), UserResponse.class))
+                        .token(token)
+                        .build();
+
+                logger.info("Login successful for email={}", loginRequest.getEmail());
+                return loginResponse;
+            } else {
+                logger.warn("Login failed: Invalid credentials for email={}", loginRequest.getEmail());
+            }
+        } catch (Exception e) {
+            logger.error("Error during login for email={}: {}", loginRequest.getEmail(), e.getMessage(), e);
         }
+
         return null;
     }
+
 
 }

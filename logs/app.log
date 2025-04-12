@@ -1,0 +1,378 @@
+2025-04-12 21:46:25 [restartedMain] INFO  com.milan.EnotesApiApplication - Starting EnotesApiApplication using Java 21.0.6 with PID 32716 (D:\Spring Projects\Be Coder YT\ENotes\enotes_api\target\classes started by Meelan in D:\Spring Projects\Be Coder YT\ENotes\enotes_api)
+2025-04-12 21:46:25 [restartedMain] INFO  com.milan.EnotesApiApplication - The following 1 profile is active: "dev"
+2025-04-12 21:46:25 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-04-12 21:46:25 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-04-12 21:46:26 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-12 21:46:26 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 104 ms. Found 7 JPA repository interfaces.
+2025-04-12 21:46:28 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-12 21:46:28 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-12 21:46:28 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-04-12 21:46:28 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-12 21:46:28 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3097 ms
+2025-04-12 21:46:28 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-12 21:46:28 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-04-12 21:46:28 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-12 21:46:29 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-12 21:46:29 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-12 21:46:29 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5fcb6bae
+2025-04-12 21:46:29 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-12 21:46:29 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.29
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-12 21:46:29 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(12, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@1dac7086) replaced previous registration(org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@6f29737)
+2025-04-12 21:46:29 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(-9, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@6b063344) replaced previous registration(org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@16298514)
+2025-04-12 21:46:29 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(-3, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@687fef17) replaced previous registration(org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@7a268600)
+2025-04-12 21:46:29 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(4003, org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@20600613) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@7a3b362e)
+2025-04-12 21:46:29 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(4001, org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@6dab7929) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@23f3e41a)
+2025-04-12 21:46:29 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(4002, org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@3032ee9) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@20aaf2e1)
+2025-04-12 21:46:29 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(2004, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@16feb5ec) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@2a91401d)
+2025-04-12 21:46:29 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(2005, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@307f57c0) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@47b586d4)
+2025-04-12 21:46:29 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(2011, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@24870a1b) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@4b6373e)
+2025-04-12 21:46:31 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-12 21:46:31 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 21:46:31 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-04-12 21:46:31 [restartedMain] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2025-04-12 21:46:31 [restartedMain] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-12 21:46:34 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-04-12 21:46:35 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-04-12 21:46:35 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-12 21:46:35 [restartedMain] INFO  com.milan.EnotesApiApplication - Started EnotesApiApplication in 11.343 seconds (process running for 12.785)
+2025-04-12 21:46:56 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-12 21:46:56 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-12 21:46:56 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-04-12 21:46:57 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.first_name,
+        u1_0.last_name,
+        u1_0.mobile_number,
+        u1_0.password,
+        u1_0.status_id 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-04-12 21:46:57 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        as1_0.id,
+        as1_0.is_active,
+        as1_0.password_reset_token,
+        as1_0.verification_code 
+    from
+        account_status as1_0 
+    where
+        as1_0.id=?
+2025-04-12 21:46:57 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_role r1_0 
+    join
+        role r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2025-04-12 21:47:25 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-12 21:47:25 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-12 21:47:25 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 21:47:25 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-12 21:47:25 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-12 21:54:03 [restartedMain] INFO  com.milan.EnotesApiApplication - Starting EnotesApiApplication using Java 21.0.6 with PID 16060 (D:\Spring Projects\Be Coder YT\ENotes\enotes_api\target\classes started by Meelan in D:\Spring Projects\Be Coder YT\ENotes\enotes_api)
+2025-04-12 21:54:03 [restartedMain] INFO  com.milan.EnotesApiApplication - The following 1 profile is active: "dev"
+2025-04-12 21:54:03 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-04-12 21:54:03 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-04-12 21:54:06 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-12 21:54:06 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 113 ms. Found 7 JPA repository interfaces.
+2025-04-12 21:54:07 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-12 21:54:07 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-12 21:54:07 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-04-12 21:54:07 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-12 21:54:07 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3346 ms
+2025-04-12 21:54:07 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-12 21:54:07 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-04-12 21:54:07 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-12 21:54:07 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-12 21:54:08 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-12 21:54:08 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@3214acd0
+2025-04-12 21:54:08 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-12 21:54:08 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.29
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-12 21:54:08 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(12, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@45715fa4) replaced previous registration(org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@6e99e816)
+2025-04-12 21:54:08 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(-9, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@6a792f7d) replaced previous registration(org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@2642f9d0)
+2025-04-12 21:54:08 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(-3, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@69810ec3) replaced previous registration(org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@487982bd)
+2025-04-12 21:54:08 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(4003, org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@6bd84e08) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@5a65a6da)
+2025-04-12 21:54:08 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(4001, org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@3bf35c43) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@3f1b4dea)
+2025-04-12 21:54:08 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(4002, org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@169aec0f) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@613ecb70)
+2025-04-12 21:54:08 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(2004, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@400e8250) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@259ff3a6)
+2025-04-12 21:54:08 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(2005, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@64a4998e) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@73d6ab21)
+2025-04-12 21:54:08 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(2011, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@477eab09) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@1da66283)
+2025-04-12 21:54:10 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-12 21:54:10 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 21:54:11 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-04-12 21:54:11 [restartedMain] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2025-04-12 21:54:11 [restartedMain] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-12 21:54:13 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-04-12 21:54:14 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-04-12 21:54:14 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-12 21:54:14 [restartedMain] INFO  com.milan.EnotesApiApplication - Started EnotesApiApplication in 12.136 seconds (process running for 13.635)
+2025-04-12 21:54:36 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-12 21:54:36 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-12 21:54:36 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-04-12 21:54:36 [http-nio-8080-exec-1] INFO  com.milan.controller.AuthController - Login attempt for email=lamameelan32@gmail.com
+2025-04-12 21:54:36 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.first_name,
+        u1_0.last_name,
+        u1_0.mobile_number,
+        u1_0.password,
+        u1_0.status_id 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-04-12 21:54:36 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        as1_0.id,
+        as1_0.is_active,
+        as1_0.password_reset_token,
+        as1_0.verification_code 
+    from
+        account_status as1_0 
+    where
+        as1_0.id=?
+2025-04-12 21:54:36 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_role r1_0 
+    join
+        role r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2025-04-12 21:54:37 [http-nio-8080-exec-1] INFO  com.milan.controller.AuthController - Login successful for email=lamameelan32@gmail.com
+2025-04-12 21:54:52 [http-nio-8080-exec-3] INFO  com.milan.controller.AuthController - Login attempt for email=lamameelan32@gmail.com
+2025-04-12 21:54:52 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.first_name,
+        u1_0.last_name,
+        u1_0.mobile_number,
+        u1_0.password,
+        u1_0.status_id 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-04-12 21:54:52 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        as1_0.id,
+        as1_0.is_active,
+        as1_0.password_reset_token,
+        as1_0.verification_code 
+    from
+        account_status as1_0 
+    where
+        as1_0.id=?
+2025-04-12 21:54:52 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_role r1_0 
+    join
+        role r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2025-04-12 21:54:52 [http-nio-8080-exec-3] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.security.authentication.BadCredentialsException: Bad credentials]
+2025-04-12 21:55:42 [http-nio-8080-exec-5] INFO  com.milan.controller.AuthController - Login attempt for email=lamameelan32@gmail.com
+2025-04-12 21:55:42 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.first_name,
+        u1_0.last_name,
+        u1_0.mobile_number,
+        u1_0.password,
+        u1_0.status_id 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-04-12 21:55:42 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        as1_0.id,
+        as1_0.is_active,
+        as1_0.password_reset_token,
+        as1_0.verification_code 
+    from
+        account_status as1_0 
+    where
+        as1_0.id=?
+2025-04-12 21:55:42 [http-nio-8080-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_role r1_0 
+    join
+        role r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2025-04-12 21:55:42 [http-nio-8080-exec-5] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.security.authentication.BadCredentialsException: Bad credentials]
+2025-04-12 21:55:46 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-12 21:55:46 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-12 21:55:46 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 21:55:46 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-12 21:55:46 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-12 22:05:16 [restartedMain] INFO  com.milan.EnotesApiApplication - Starting EnotesApiApplication using Java 21.0.6 with PID 9468 (D:\Spring Projects\Be Coder YT\ENotes\enotes_api\target\classes started by Meelan in D:\Spring Projects\Be Coder YT\ENotes\enotes_api)
+2025-04-12 22:05:16 [restartedMain] INFO  com.milan.EnotesApiApplication - The following 1 profile is active: "dev"
+2025-04-12 22:05:16 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-04-12 22:05:16 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-04-12 22:05:17 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-12 22:05:17 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 101 ms. Found 7 JPA repository interfaces.
+2025-04-12 22:05:19 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-12 22:05:19 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-12 22:05:19 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.39]
+2025-04-12 22:05:19 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-12 22:05:19 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3099 ms
+2025-04-12 22:05:19 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-12 22:05:19 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.11.Final
+2025-04-12 22:05:19 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-12 22:05:20 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-12 22:05:20 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-12 22:05:20 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4827df7b
+2025-04-12 22:05:20 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-12 22:05:21 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.29
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-12 22:05:21 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(12, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@43aa1a7d) replaced previous registration(org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@5999f4e8)
+2025-04-12 22:05:21 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(-9, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@655f40f) replaced previous registration(org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@45922657)
+2025-04-12 22:05:21 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(-3, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@5678a56a) replaced previous registration(org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@405035f9)
+2025-04-12 22:05:21 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(4003, org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@690c5470) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@3d786798)
+2025-04-12 22:05:21 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(4001, org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@2e38d6a8) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@6f86c16b)
+2025-04-12 22:05:21 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(4002, org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@6422a73f) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@1a185884)
+2025-04-12 22:05:21 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(2004, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@72fd50f9) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@2ba95a54)
+2025-04-12 22:05:21 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(2005, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@5a431b41) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@2c7a4f5)
+2025-04-12 22:05:21 [restartedMain] DEBUG o.h.t.d.sql.spi.DdlTypeRegistry - addDescriptor(2011, org.hibernate.type.descriptor.sql.internal.CapacityDependentDdlType@1aa556cc) replaced previous registration(org.hibernate.type.descriptor.sql.internal.DdlTypeImpl@7bbfc436)
+2025-04-12 22:05:23 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-12 22:05:23 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 22:05:24 [restartedMain] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-04-12 22:05:24 [restartedMain] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2025-04-12 22:05:24 [restartedMain] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-04-12 22:05:26 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-04-12 22:05:27 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-04-12 22:05:27 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-12 22:05:28 [restartedMain] INFO  com.milan.EnotesApiApplication - Started EnotesApiApplication in 12.688 seconds (process running for 14.048)
+2025-04-12 22:05:35 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-12 22:05:35 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-12 22:05:35 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2025-04-12 22:05:35 [http-nio-8080-exec-1] INFO  com.milan.controller.AuthController - Login attempt for email=lamameelan32@gmail.com
+2025-04-12 22:05:35 [http-nio-8080-exec-1] INFO  c.milan.service.impl.AuthServiceImpl - Login attempt for email=lamameelan32@gmail.com
+2025-04-12 22:05:35 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.first_name,
+        u1_0.last_name,
+        u1_0.mobile_number,
+        u1_0.password,
+        u1_0.status_id 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-04-12 22:05:35 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        as1_0.id,
+        as1_0.is_active,
+        as1_0.password_reset_token,
+        as1_0.verification_code 
+    from
+        account_status as1_0 
+    where
+        as1_0.id=?
+2025-04-12 22:05:35 [http-nio-8080-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_role r1_0 
+    join
+        role r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2025-04-12 22:05:35 [http-nio-8080-exec-1] INFO  c.milan.service.impl.AuthServiceImpl - Login successful for email=lamameelan32@gmail.com
+2025-04-12 22:05:35 [http-nio-8080-exec-1] INFO  com.milan.controller.AuthController - Login successful for email=lamameelan32@gmail.com
+2025-04-12 22:05:53 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.email,
+        u1_0.first_name,
+        u1_0.last_name,
+        u1_0.mobile_number,
+        u1_0.password,
+        u1_0.status_id 
+    from
+        user u1_0 
+    where
+        u1_0.email=?
+2025-04-12 22:05:53 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        as1_0.id,
+        as1_0.is_active,
+        as1_0.password_reset_token,
+        as1_0.verification_code 
+    from
+        account_status as1_0 
+    where
+        as1_0.id=?
+2025-04-12 22:05:53 [http-nio-8080-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_role r1_0 
+    join
+        role r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2025-04-12 22:05:53 [http-nio-8080-exec-3] INFO  com.milan.controller.UserController - Request received for fetching user profile.
+2025-04-12 22:05:53 [http-nio-8080-exec-3] INFO  com.milan.controller.UserController - Successfully retrieved profile for user: lamameelan32@gmail.com
+2025-04-12 22:05:59 [SpringApplicationShutdownHook] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-12 22:05:59 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-12 22:05:59 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-12 22:05:59 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-12 22:05:59 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

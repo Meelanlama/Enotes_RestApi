@@ -54,12 +54,26 @@ file:
 logging:
   level:
     root: INFO
+    com.milan.controller: DEBUG           # Show detailed logs for your controller
+    com.milan.service: INFO               # Service logs (optional)
     org:
       hibernate:
-        SQL: DEBUG
+        SQL: DEBUG                        # Show SQL queries
         type:
           descriptor:
-            sql: TRACE
+            sql: TRACE                    # Show parameter bindings
+
+  file:
+    name: logs/app.log                    # Log file location
+
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB                 # File rotation after 10MB
+      max-history: 5                      # Keep last 5 rolled logs
 
 ---
 
