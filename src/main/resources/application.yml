@@ -75,6 +75,9 @@ logging:
       max-file-size: 10MB                 # File rotation after 10MB
       max-history: 5                      # Keep last 5 rolled logs
 
+jwt:
+  secret: X3kBtbafLa6bOvSY5VppbYI0DyEOk8EMXp3SgiU+PCI=
+
 ---
 
 # 🧪 test config
@@ -123,6 +126,9 @@ file:
 logging:
   level:
     root: ERROR
+
+jwt:
+  secret: X3kBtbafLa6bOvSY5VppbYI0DyEOk8EMXp3SgiU+PCI=
 
 ---
 
