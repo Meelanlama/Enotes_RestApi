@@ -2,7 +2,7 @@ spring:
   application:
     name: enotes_api
   profiles:
-    active: dev  # ✅ Under "spring"
+    active: test  # ✅ Under "spring"
 ---
 
 # ✅ dev config
