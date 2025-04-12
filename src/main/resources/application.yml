@@ -1,0 +1,209 @@
+spring:
+  application:
+    name: enotes_api
+  profiles:
+    active: dev  # ✅ Under "spring"
+---
+
+# ✅ dev config
+spring:
+  config:
+    activate:
+      on-profile: dev
+  main:
+    banner-mode: off
+  datasource:
+    url: jdbc:mysql://localhost:3306/enotes
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: admin
+  data:
+    jdbc:
+      dialect: mysql
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: lamameelan32@gmail.com
+    password: ivevewzysomlojaq
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+file:
+  upload:
+    path: notes/
+
+logging:
+  level:
+    root: WARN
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql: TRACE
+
+---
+
+# 🧪 test config
+spring:
+  config:
+    activate:
+      on-profile: test
+  main:
+    banner-mode: off
+  datasource:
+    url: jdbc:mysql://localhost:3306/enotes_test
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: test123
+  data:
+    jdbc:
+      dialect: mysql
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: false
+    show-sql: false
+  mail:
+    host: smtp.testmail.com
+    port: 587
+    username: test@domain.com
+    password: testmailpass
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+file:
+  upload:
+    path: notes/test/
+
+logging:
+  level:
+    root: ERROR
+
+---
+
+# 🚧 uat config
+spring:
+  config:
+    activate:
+      on-profile: uat
+  main:
+    banner-mode: off
+  datasource:
+    url: jdbc:mysql://localhost:3306/enotes_uat
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: uat_user
+    password: uatpass
+  data:
+    jdbc:
+      dialect: mysql
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: false
+    show-sql: false
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: lamameelan32@gmail.com
+    password: uatemailpass
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
+
+file:
+  upload:
+    path: notes/uat/
+
+logging:
+  level:
+    root: WARN
+
+---
+
+# 🚀 prod config
+spring:
+  config:
+    activate:
+      on-profile: prod
+  main:
+    banner-mode: off
+  datasource:
+    url: jdbc:mysql://localhost:3306/enotes_prod
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: prod_user
+    password: prodpass
+  data:
+    jdbc:
+      dialect: mysql
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: false
+    show-sql: false
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: lamameelan32@gmail.com
+    password: prodenvmailpass
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+file:
+  upload:
+    path: notes/prod/
+
+logging:
+  level:
+    root: ERROR
