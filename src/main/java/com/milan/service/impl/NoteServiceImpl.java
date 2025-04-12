@@ -230,6 +230,30 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
+    public NotesResponse getNotesByUserSearch(Integer pageNo, Integer pageSize, String keyword) {
+        //get user id
+        Integer userId = CommonUtil.getLoggedInUser().getId();
+
+        Pageable pageable= PageRequest.of(pageNo,pageSize);
+        //GET ONLY ACTIVE NOTES
+        Page<Notes> pageNotes = noteRepository.searchNotes(keyword,userId,pageable);
+
+        //convert note entity to dto
+        List<NotesDto> notesDto = pageNotes.get().map(n -> mapper.map(n, NotesDto.class)).toList();
+
+        //get all the data of notes
+        return NotesResponse.builder()
+                .notes(notesDto)
+                .pageNo(pageNotes.getNumber())
+                .pageSize(pageNotes.getSize())
+                .totalElements(pageNotes.getTotalElements())
+                .totalPages(pageNotes.getTotalPages())
+                .isFirst(pageNotes.isFirst())
+                .isLast(pageNotes.isLast())
+                .build();
+    }
+
+    @Override
     public void softDeleteNotes(Integer id) throws ResourceNotFoundException {
         Notes notes = noteRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Notes id invalid ! Not Found"));

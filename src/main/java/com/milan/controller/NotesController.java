@@ -71,6 +71,15 @@ public class NotesController {
         return CommonUtil.createBuildResponse(notes,HttpStatus.OK);
     }
 
+    @GetMapping("/search")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?> searchNotes(@RequestParam(name = "keyword",defaultValue = "") String keyword,
+                                         @RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
+                                         @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
+        NotesResponse notes = noteService.getNotesByUserSearch(pageNo, pageSize,keyword);
+        return CommonUtil.createBuildResponse(notes, HttpStatus.OK);
+    }
+
     @GetMapping("/download-file/{fileId}")
     @PreAuthorize("hasAnyRole('USER','ADMIN')")
     public ResponseEntity<?> downloadFile(@PathVariable Integer fileId) throws Exception {
