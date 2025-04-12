@@ -3,7 +3,7 @@ package com.milan.controller;
 import com.milan.dto.LoginRequest;
 import com.milan.dto.LoginResponse;
 import com.milan.dto.UserDto;
-import com.milan.service.UserService;
+import com.milan.service.AuthService;
 import com.milan.util.CommonUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final UserService userService;
+    private final AuthService authService;
 
     @PostMapping("/")
     public ResponseEntity<?> registerUser(@RequestBody UserDto userDto, HttpServletRequest request) throws Exception {
@@ -28,7 +28,7 @@ public class AuthController {
         //get url
         String url = CommonUtil.getUrl(request);
 
-        Boolean register = userService.registerUser(userDto,url);
+        Boolean register = authService.registerUser(userDto,url);
         if (register) {
             return CommonUtil.createBuildResponseMessage("Register success", HttpStatus.CREATED);
         }
@@ -38,7 +38,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) throws Exception {
 
-        LoginResponse loginResponse = userService.login(loginRequest);
+        LoginResponse loginResponse = authService.login(loginRequest);
         if (ObjectUtils.isEmpty(loginResponse)) {
             return CommonUtil.createErrorResponseMessage("Invalid credential", HttpStatus.BAD_REQUEST);
         }

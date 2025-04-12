@@ -1,13 +1,8 @@
 package com.milan.service;
 
-import com.milan.dto.LoginRequest;
-import com.milan.dto.LoginResponse;
-import com.milan.dto.UserDto;
+import com.milan.dto.PasswordChangeRequest;
 
 public interface UserService {
 
-    Boolean registerUser(UserDto userDto,String url) throws Exception;
-
-    public LoginResponse login(LoginRequest loginRequest);
-
+    public void changePassword(PasswordChangeRequest request);
 }
