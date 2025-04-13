@@ -2,6 +2,7 @@ package com.milan.controller;
 
 import com.milan.dto.PasswordChangeRequest;
 import com.milan.dto.UserResponse;
+import com.milan.endpoint.UserEndpoint;
 import com.milan.model.User;
 import com.milan.service.UserService;
 import com.milan.util.CommonUtil;
@@ -17,16 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
-public class UserController {
+public class UserController implements UserEndpoint {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     private final ModelMapper mapper;
     private final UserService userService;
 
-    @GetMapping("/profile")
+    @Override
     public ResponseEntity<?> getProfile() {
         logger.info("Request received for fetching user profile.");
 
@@ -42,8 +42,8 @@ public class UserController {
         }
     }
 
-    @GetMapping("/change-password")
-    public ResponseEntity<?> changePassword(@RequestBody PasswordChangeRequest request) {
+    @Override
+    public ResponseEntity<?> changePassword(PasswordChangeRequest request) {
         logger.info("Request received to change password for user: {}");
 
         try {

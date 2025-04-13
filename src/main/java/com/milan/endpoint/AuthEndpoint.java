@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface AuthEndpoint {
 
     @PostMapping("/")
-    public ResponseEntity<?> registerUser(@RequestBody UserDto userDto, HttpServletRequest request) throws Exception;
+    ResponseEntity<?> registerUser(@RequestBody UserDto userDto, HttpServletRequest request) throws Exception;
 
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) throws Exception;
+    ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) throws Exception;
 }

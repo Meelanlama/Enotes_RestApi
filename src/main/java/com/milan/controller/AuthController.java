@@ -13,9 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -27,7 +24,7 @@ public class AuthController implements AuthEndpoint {
     private final AuthService authService;
 
     @Override
-    public ResponseEntity<?> registerUser(@RequestBody UserDto userDto, HttpServletRequest request) throws Exception {
+    public ResponseEntity<?> registerUser(UserDto userDto, HttpServletRequest request) throws Exception {
         String url = CommonUtil.getUrl(request);
 
         logger.info("Registering new user: email={}, url={}", userDto.getEmail(), url);
@@ -44,7 +41,7 @@ public class AuthController implements AuthEndpoint {
     }
 
     @Override
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) throws Exception {
+    public ResponseEntity<?> login(LoginRequest loginRequest) throws Exception {
 
         logger.info("Login attempt for email={}", loginRequest.getEmail());
 

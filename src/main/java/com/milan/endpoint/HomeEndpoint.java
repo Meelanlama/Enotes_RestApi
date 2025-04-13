@@ -14,16 +14,16 @@ import jakarta.servlet.http.HttpServletRequest;
 public interface HomeEndpoint {
 
     @GetMapping("/verify")
-    public ResponseEntity<?> verifyUserAccount(@RequestParam Integer uid, @RequestParam String code) throws Exception;
+    ResponseEntity<?> verifyUserAccount(@RequestParam Integer uid, @RequestParam String code) throws Exception;
 
     @GetMapping("/send-email-reset-link")
-    public ResponseEntity<?> sendEmailForPasswordReset(@RequestParam String email, HttpServletRequest request)
+    ResponseEntity<?> sendEmailForPasswordReset(@RequestParam String email, HttpServletRequest request)
             throws Exception;
 
     @GetMapping("/verify-link")
-    public ResponseEntity<?> verifyPasswordResetLink(@RequestParam Integer uid, @RequestParam String code)
+    ResponseEntity<?> verifyPasswordResetLink(@RequestParam Integer uid, @RequestParam String code)
             throws Exception;
 
     @PostMapping("/reset-password")
-    public ResponseEntity<?> resetPassword(@RequestBody PasswordResetRequest passwordResetRequest) throws Exception;
+    ResponseEntity<?> resetPassword(@RequestBody PasswordResetRequest passwordResetRequest) throws Exception;
 }

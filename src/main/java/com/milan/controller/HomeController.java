@@ -24,7 +24,7 @@ public class HomeController implements HomeEndpoint {
     private final UserService userService;
 
     @Override
-    public ResponseEntity<?> verifyUserAccount(@RequestParam Integer userId, @RequestParam String verificationCode)
+    public ResponseEntity<?> verifyUserAccount(Integer userId,String verificationCode)
             throws ResourceNotFoundException {
 
         logger.info("Verifying user account for userId={} with code={}", userId, verificationCode);
@@ -40,7 +40,7 @@ public class HomeController implements HomeEndpoint {
     }
 
     @Override
-    public ResponseEntity<?> sendEmailForPasswordReset(@RequestParam String email, HttpServletRequest request)
+    public ResponseEntity<?> sendEmailForPasswordReset(String email, HttpServletRequest request)
             throws Exception {
 
         logger.info("Request received to send password reset link to email={}", email);
@@ -50,7 +50,7 @@ public class HomeController implements HomeEndpoint {
     }
 
     @Override
-    public ResponseEntity<?> verifyPasswordResetLink(@RequestParam Integer userId, @RequestParam String token)
+    public ResponseEntity<?> verifyPasswordResetLink(Integer userId,String token)
             throws Exception {
 
         logger.info("Verifying password reset link for userId={} with token={}", userId, token);
@@ -60,7 +60,7 @@ public class HomeController implements HomeEndpoint {
     }
 
     @Override
-    public ResponseEntity<?> resetPassword(@RequestBody PasswordResetRequest passwordResetRequest) throws Exception {
+    public ResponseEntity<?> resetPassword(PasswordResetRequest passwordResetRequest) throws Exception {
 
         logger.info("Resetting password for userId={} (token={})", passwordResetRequest.getUid());
         userService.resetPassword(passwordResetRequest);

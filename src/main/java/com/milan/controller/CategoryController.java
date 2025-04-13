@@ -31,7 +31,7 @@ public class CategoryController implements CategoryEndpoint {
     private final ModelMapper mapper;
 
     @Override
-    public ResponseEntity<?> saveCategory(@RequestBody CategoryDto categoryDto) {
+    public ResponseEntity<?> saveCategory(CategoryDto categoryDto) {
 
         Boolean b = categoryService.saveCategory(categoryDto);
         if (b) {
@@ -66,7 +66,7 @@ public class CategoryController implements CategoryEndpoint {
     }
 
     @Override
-    public ResponseEntity<?> getCategoryDetailsById(@PathVariable("id") Integer id) throws ResourceNotFoundException {
+    public ResponseEntity<?> getCategoryDetailsById(Integer id) throws ResourceNotFoundException {
 
         CategoryDto categoryById = categoryService.getCategoryById(id);
         if(ObjectUtils.isEmpty(categoryById)) {
@@ -76,7 +76,7 @@ public class CategoryController implements CategoryEndpoint {
     }
 
     @Override
-    public ResponseEntity<?> deleteCategoryDetailsById(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteCategoryDetailsById(Integer id) {
         Boolean isDeleted =  categoryService.deleteCategoryById(id);
 
         if(isDeleted) {
