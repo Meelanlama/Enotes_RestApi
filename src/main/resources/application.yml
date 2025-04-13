@@ -68,7 +68,7 @@ logging:
 
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
-    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm} [%thread] %-5level %logger{36} - %msg%n"
 
   logback:
     rollingpolicy:
@@ -77,6 +77,15 @@ logging:
 
 jwt:
   secret: X3kBtbafLa6bOvSY5VppbYI0DyEOk8EMXp3SgiU+PCI=
+
+#FOR SWAGGER
+springdoc:
+  swagger-ui:
+    operations-sorter: method
+    tags-sorter: alpha
+    path: /enotes-docs
+  api-docs:
+    path: /enotes-api-docs
 
 ---
 

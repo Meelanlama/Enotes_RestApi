@@ -145,4 +145,12 @@ public class NotesController implements NotesEndpoint {
         return CommonUtil.createBuildResponse(userFavoriteNotes, HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<?> copyNotes(Integer id) throws Exception{
+        Boolean copyNotes = noteService.copyNotes(id);
+        if (copyNotes) {
+            return CommonUtil.createBuildResponseMessage("Copied success", HttpStatus.CREATED);
+        }
+        return CommonUtil.createErrorResponseMessage("Copy failed ! Try Again", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }
