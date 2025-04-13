@@ -2,6 +2,7 @@ package com.milan.controller;
 
 import com.milan.dto.CategoryDto;
 import com.milan.dto.CategoryResponse;
+import com.milan.endpoint.CategoryEndpoint;
 import com.milan.exception.ResourceNotFoundException;
 import com.milan.model.Category;
 import com.milan.repository.CategoryRepository;
@@ -24,14 +25,13 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/category")
 @RequiredArgsConstructor
 @Slf4j
-public class CategoryController {
+public class CategoryController implements CategoryEndpoint {
 
     private final CategoryService categoryService;
 
     private final ModelMapper mapper;
 
-    @PostMapping("/save-category")
-    @PreAuthorize("hasRole('ADMIN')")
+    @Override
     public ResponseEntity<?> saveCategory(@RequestBody CategoryDto categoryDto) {
 
         Boolean b = categoryService.saveCategory(categoryDto);
@@ -43,8 +43,7 @@ public class CategoryController {
         //return new ResponseEntity<>("Category not saved", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @GetMapping("/")
-    @PreAuthorize("hasRole('ADMIN')")
+    @Override
     public ResponseEntity<?> getAllCategoryWithDetails() {
 
         List<CategoryDto> allCategories = categoryService.getAllCategories();
@@ -56,8 +55,7 @@ public class CategoryController {
        // return new ResponseEntity<>(allCategories, HttpStatus.OK);
     }
 
-    @GetMapping("/active")
-    @PreAuthorize("hasAnyRole('USER','ADMIN')")
+    @Override
     public ResponseEntity<?> getActiveCategory() {
 
         List<CategoryResponse> activeCategories = categoryService.getActiveCategories();
@@ -68,8 +66,7 @@ public class CategoryController {
         return CommonUtil.createBuildResponse(activeCategories,HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @Override
     public ResponseEntity<?> getCategoryDetailsById(@PathVariable("id") Integer id) throws ResourceNotFoundException {
 
         CategoryDto categoryById = categoryService.getCategoryById(id);
@@ -79,8 +76,7 @@ public class CategoryController {
         return CommonUtil.createBuildResponse(categoryById,HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @Override
     public ResponseEntity<?> deleteCategoryDetailsById(@PathVariable("id") Integer id) {
         Boolean isDeleted =  categoryService.deleteCategoryById(id);
 

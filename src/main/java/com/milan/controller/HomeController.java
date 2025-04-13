@@ -1,6 +1,7 @@
 package com.milan.controller;
 
 import com.milan.dto.PasswordResetRequest;
+import com.milan.endpoint.HomeEndpoint;
 import com.milan.exception.ResourceNotFoundException;
 import com.milan.service.HomeService;
 import com.milan.service.UserService;
@@ -16,14 +17,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/home")
 @RequiredArgsConstructor
-public class HomeController {
+public class HomeController implements HomeEndpoint {
 
     private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     private final HomeService homeService;
     private final UserService userService;
 
-    @GetMapping("/verify")
+    @Override
     public ResponseEntity<?> verifyUserAccount(@RequestParam Integer userId, @RequestParam String verificationCode)
             throws ResourceNotFoundException {
 
@@ -39,7 +40,7 @@ public class HomeController {
         return CommonUtil.createErrorResponseMessage("Invalid verification link", HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping("/send-email-reset-link")
+    @Override
     public ResponseEntity<?> sendEmailForPasswordReset(@RequestParam String email, HttpServletRequest request)
             throws Exception {
 
@@ -49,7 +50,7 @@ public class HomeController {
         return CommonUtil.createBuildResponseMessage("Email sent. Check Email For Password Reset", HttpStatus.OK);
     }
 
-    @GetMapping("/verify-link")
+    @Override
     public ResponseEntity<?> verifyPasswordResetLink(@RequestParam Integer userId, @RequestParam String token)
             throws Exception {
 
@@ -59,7 +60,7 @@ public class HomeController {
         return CommonUtil.createBuildResponseMessage("Verification successful", HttpStatus.OK);
     }
 
-    @PostMapping("/reset-password")
+    @Override
     public ResponseEntity<?> resetPassword(@RequestBody PasswordResetRequest passwordResetRequest) throws Exception {
 
         logger.info("Resetting password for userId={} (token={})", passwordResetRequest.getUid());
