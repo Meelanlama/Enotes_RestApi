@@ -3,6 +3,7 @@ package com.milan.controller;
 import com.milan.dto.LoginRequest;
 import com.milan.dto.LoginResponse;
 import com.milan.dto.UserDto;
+import com.milan.endpoint.AuthEndpoint;
 import com.milan.service.AuthService;
 import com.milan.util.CommonUtil;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,15 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-public class AuthController {
+public class AuthController implements AuthEndpoint {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
 
     private final AuthService authService;
 
-    @PostMapping("/")
+    @Override
     public ResponseEntity<?> registerUser(@RequestBody UserDto userDto, HttpServletRequest request) throws Exception {
         String url = CommonUtil.getUrl(request);
 
@@ -43,7 +43,7 @@ public class AuthController {
         return CommonUtil.createErrorResponseMessage("Register failed", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @PostMapping("/login")
+    @Override
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) throws Exception {
 
         logger.info("Login attempt for email={}", loginRequest.getEmail());
