@@ -49,10 +49,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http.csrf(csrf -> csrf.disable())
+        http.csrf(csrf -> csrf.disable())  // Safe: Using stateless JWT authentication
                 .authorizeHttpRequests(req -> req.requestMatchers
-                                ("/api/v1/home/**", "/api/v1/auth/**", "/swagger-ui/**","/v3/api-docs/**","/enotes-api-docs/**","/enotes-docs/**")
-                        .permitAll()
+                                ("/api/v1/home/**", "/api/v1/auth/**", "/swagger-ui/**","/v3/api-docs/**","/enotes-api-docs/**",
+                                        "/enotes-docs/**","/actuator/**").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session-> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

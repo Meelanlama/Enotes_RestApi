@@ -87,6 +87,13 @@ springdoc:
   api-docs:
     path: /enotes-api-docs
 
+#Actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+        exclude: beans,loggers
 ---
 
 # 🧪 test config

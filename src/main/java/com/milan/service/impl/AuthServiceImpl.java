@@ -66,16 +66,17 @@ public class AuthServiceImpl implements AuthService {
 
         logger.debug("User object prepared for saving: {}", saveUser);
 
-        User savedUser = userRepo.save(saveUser);
-        if(savedUser != null) {
-            //send email
+        try {
+            // Save the user and proceed
+            User savedUser = userRepo.save(saveUser);
             logger.info("User registration successful for email={}", savedUser.getEmail());
-            emailSend(savedUser,url);
-            return true;
-        } else {
-            logger.error("User registration failed for email={}", userDto.getEmail());
+            emailSend(savedUser, url);
+            return true; // Return true indicating success
+        } catch (Exception e) {
+            // If there's an exception, log the error
+            logger.error("User registration failed for email={}", userDto.getEmail(), e);
+            return false; // Return false indicating failure
         }
-        return false;
     }
 
     private void emailSend(User savedUser, String url) throws Exception {
