@@ -170,12 +170,12 @@
 				<executions>
 					<execution>
 						<goals>
-							<goal>prepare-agent</goal> <!-- Enables coverage tracking during tests -->
+							<goal>prepare-agent</goal> <!-- Tracks coverage during test execution -->
 						</goals>
 					</execution>
 					<execution>
 						<id>report</id>
-						<phase>verify</phase> <!-- Generates report after tests -->
+						<phase>verify</phase> <!-- Creates the report after tests are run -->
 						<goals>
 							<goal>report</goal>
 						</goals>

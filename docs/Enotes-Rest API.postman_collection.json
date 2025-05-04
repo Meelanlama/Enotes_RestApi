@@ -1,0 +1,1040 @@
+{
+	"info": {
+		"_postman_id": "bbe239fa-89bf-4139-b254-582c63c6fa64",
+		"name": "Enotes-Rest API",
+		"description": "All Apis of my enotes",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "40228881"
+	},
+	"item": [
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Get All Categories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbeyJpZCI6MSwibmFtZSI6IkFETUlOIn1dLCJpZCI6OCwic3RhdHVzIjp0cnVlLCJzdWIiOiJsbWlsYW42NjdAZ21haWwuY29tIiwiaWF0IjoxNzQ0MzYyNTU3LCJleHAiOjE3NDQzNjQ3MTd9.P2B8VwZWbDd8dGKcbR9hDtaC0K2fm6kK9DDeLMq0QtY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/category/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"category",
+								""
+							]
+						},
+						"description": "This API returns all the categories with the information"
+					},
+					"response": []
+				},
+				{
+					"name": "Create Category",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Ruby on Rails new\",\r\n    \"description\": \"This is new Ruby category\",\r\n    \"isActive\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/category/save-category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"category",
+								"save-category"
+							]
+						},
+						"description": "This API creates a new category"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Only Active Categories",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbeyJpZCI6MiwibmFtZSI6IlVTRVIifV0sImlkIjoxMCwic3RhdHVzIjp0cnVlLCJzdWIiOiJsYW1hbWVlbGFuMzJAZ21haWwuY29tIiwiaWF0IjoxNzQ0MzY2ODg2LCJleHAiOjE3NDQzNjkwNDZ9.roM49LrLzJBYn7CyXZsEGkouKS9sNYBuodI_e2dB3Po",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/category/active",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"category",
+								"active"
+							]
+						},
+						"description": "This API returns all the categories with name,id,desc"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category By Id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/category/12",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"category",
+								"12"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Category By Id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/category/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"category",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Java Updated\",\r\n    \"description\": \"This is Updated Java category\",\r\n    \"isActive\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/category/save-category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"category",
+								"save-category"
+							]
+						},
+						"description": "Should pass id of the category we need to update, if id is not present/null. Then it creates category instead of updating."
+					},
+					"response": []
+				},
+				{
+					"name": "Validation check",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"asa\",\r\n    \"description\": \"\",\r\n    \"isActive\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/category/save-category",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"category",
+								"save-category"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "API for Category Service"
+		},
+		{
+			"name": "Notes",
+			"item": [
+				{
+					"name": "Get all Notes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbeyJpZCI6MiwibmFtZSI6IlVTRVIifV0sImlkIjoxMCwic3RhdHVzIjp0cnVlLCJzdWIiOiJsYW1hbWVlbGFuMzJAZ21haWwuY29tIiwiaWF0IjoxNzQ0NDY4MjY0LCJleHAiOjE3NDQ1MDQyNjR9.PbkEpms-fJ8Wvn50aWJKPSUAvZSFGVq9LfVOB9_XbK8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/notes/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"notes",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Validation Check",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"\",\r\n    \"description\": \"Generics In Depth\"\r\n    // \"category\":{\r\n    //     \"id\":1\r\n    // }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/notes/save-notes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"notes",
+								"save-notes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save/Update note -  with img",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbeyJpZCI6MiwibmFtZSI6IlVTRVIifV0sImlkIjoxMCwic3RhdHVzIjp0cnVlLCJzdWIiOiJsYW1hbWVlbGFuMzJAZ21haWwuY29tIiwiaWF0IjoxNzQ0Mzc0OTAyLCJleHAiOjE3NDQzNzcwNjJ9.hz3D6_7opOw9WtiUq7-P4w2WqRz6GCUrK0TxjDPX5kA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "notes",
+									"value": "{\n    \"title\": \"JavaScript And TypeScript Post\" ,\n    \"description\": \"Loops and switch\",\n    \"category\":{\n        \"id\":2\n    }\n}",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/notes/save-notes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"notes",
+								"save-notes"
+							],
+							"query": [
+								{
+									"key": "notes",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save files of notes",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/notes/download-file/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"notes",
+								"download-file",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get notes of user by pagination",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/notes/user-notes?pageNo=0&pageSize=8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"notes",
+								"user-notes"
+							],
+							"query": [
+								{
+									"key": "pageNo",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "8"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search notes by user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbeyJpZCI6MiwibmFtZSI6IlVTRVIifV0sImlkIjoxMCwic3RhdHVzIjp0cnVlLCJzdWIiOiJsYW1hbWVlbGFuMzJAZ21haWwuY29tIiwiaWF0IjoxNzQ0NDQ3NjIyLCJleHAiOjE3NDQ0NDk3ODJ9.PjhBAwaKyLlKOV9UdBsqJXkLa2cwL3z8BSX-YYHuk8A",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/notes/search?keyword=Java",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"notes",
+								"search"
+							],
+							"query": [
+								{
+									"key": "keyword",
+									"value": "Java"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Soft Delete Notes",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/notes/delete/8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"notes",
+								"delete",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restore note",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/notes/restore/8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"notes",
+								"restore",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Recyle bin - Notes",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/notes/recycle-bin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"notes",
+								"recycle-bin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Hard Delete",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/notes/delete/8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"notes",
+								"delete",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Empty Recycle Bin",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/notes/delete-recyleBin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"notes",
+								"delete-recyleBin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Make notes fav",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/notes/fav/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"notes",
+								"fav",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unfavourite Note",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/notes/un-fav/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"notes",
+								"un-fav",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET All Fav Notes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbeyJpZCI6MiwibmFtZSI6IlVTRVIifV0sImlkIjoxMCwic3RhdHVzIjp0cnVlLCJzdWIiOiJsYW1hbWVlbGFuMzJAZ21haWwuY29tIiwiaWF0IjoxNzQ1MDY2OTkzLCJleHAiOjE3NDUxMDI5OTN9.5w08c1-gqaZYIe0u1s4UaSLsmGuoJmrUh4vNugIfGp8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/notes/fav-note",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"notes",
+								"fav-note"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Copy Notes",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/notes/copy/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"notes",
+								"copy",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "To do",
+			"item": [
+				{
+					"name": "SAVE/ UPDATE Todo",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\":1,\r\n    \"title\": \"Core Java\",\r\n    \"status\":{\r\n        \"id\":2\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/todo/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"todo",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET todo",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/todo/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"todo",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register ",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"Milan\",\r\n  \"lastName\": \"Tamang\",\r\n  \"email\": \"lamameelan32@gmail.com\",\r\n  \"mobileNumber\": \"9863837952\",\r\n  \"password\": \"SecurePass123\",\r\n  \"roles\": [\r\n    {\r\n      \"id\": 2\r\n    }\r\n  ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"lamameelan32@gmail.com\",\r\n    \"password\":\"hello123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbeyJpZCI6MiwibmFtZSI6IlVTRVIifV0sImlkIjoxMCwic3RhdHVzIjp0cnVlLCJzdWIiOiJsYW1hbWVlbGFuMzJAZ21haWwuY29tIiwiaWF0IjoxNzQ0NDc0ODM1LCJleHAiOjE3NDQ0NzY5OTV9.mfU0d0LXYmaDmgOAkfn4cMIwvrmnjmxiDbsi0W8v9OM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/user/profile",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjpbeyJpZCI6MiwibmFtZSI6IlVTRVIifV0sImlkIjoxMCwic3RhdHVzIjp0cnVlLCJzdWIiOiJsYW1hbWVlbGFuMzJAZ21haWwuY29tIiwiaWF0IjoxNzQ0NDM5MDQ0LCJleHAiOjE3NDQ0NDEyMDR9.W63y2CBGZg8ZsfIvR-gn-ws1cs0_qPc-ReSEeKZ4Z_w",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldPassword\": \"SecurePass123\",\r\n    \"newPassword\": \"Helloworld123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/user/change-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Password Reset email link",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/home/send-email-reset-link?email=lamameelan32@gmail.com",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"home",
+								"send-email-reset-link"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "lamameelan32@gmail.com"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"uid\":10,\r\n    \"newPassword\":\"hello123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/home/reset-password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"home",
+								"reset-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Password",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"uid\":10,\r\n    \"newPassword\":\"hello123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/home/verify-link?userId=10&&token=88d64c2a-804e-4967-a68f-4de1ef714bd1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"home",
+								"verify-link"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "10"
+								},
+								{
+									"key": null,
+									"value": null
+								},
+								{
+									"key": "token",
+									"value": "88d64c2a-804e-4967-a68f-4de1ef714bd1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
